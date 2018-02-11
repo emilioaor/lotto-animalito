@@ -15,11 +15,11 @@ class CreateTableTransfers extends Migration
     {
         Schema::create('transfers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('ticket_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->integer('from_id')->unsigned();
             $table->integer('to_id')->unsigned();
             $table->string('references', 30);
-            $table->foreign('ticket_id')->references('id')->on('tickets');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('from_id')->references('id')->on('banks');
             $table->foreign('to_id')->references('id')->on('banks');
             $table->float('amount');

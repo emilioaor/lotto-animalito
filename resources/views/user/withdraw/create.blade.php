@@ -19,9 +19,8 @@
                     <div class="panel-body">
 
                         <div class="alert alert-danger">
-
-                            <h3 class="text-danger">Importante:</h3>
                             <p>
+                                <strong>ATENCIÓN:</strong>
                                 {{ env('APP_NAME') }} realiza el pago a la cuenta que tenga configurada y no se hace responsable
                                 por datos errados en la misma. Por favor valide que estos datos sean correctos antes de solicitar
                                 el pago y recuerda que este se hace efectivo entre 1 y 24 horas habiles bancarias.

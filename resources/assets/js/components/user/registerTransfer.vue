@@ -85,7 +85,32 @@
             </div>
 
             <div class="col-sm-6">
-
+                <div class="form-group">
+                    <label for="amount">Monto</label>
+                    <input
+                            type="number"
+                            name="amount"
+                            id="amount"
+                            class="form-control"
+                            placeholder="Monto"
+                            v-model="transferForm.amount"
+                            v-validate
+                            data-vv-rules="required"
+                            >
+                    </input>
+                    <p
+                            class="text-danger"
+                            v-show="send && hasError('amount', 'required', errors)"
+                            >
+                        Este campo es requerido
+                    </p>
+                    <p
+                            class="text-danger"
+                            v-show="send && !hasError('amount', 'required', errors) && transferForm.amount < minAmount"
+                            >
+                        El minimo es {{ minAmount }}
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -94,7 +119,7 @@
                 <div class="form-group">
                     <button class="btn btn-success" v-show="! loading">
                         <i class="glyphicon glyphicon-transfer"></i>
-                        Registrar pago
+                        Recargar
                     </button>
 
                     <img src="/img/loading.gif" alt="Cargando.." v-show="loading">
@@ -107,18 +132,18 @@
 
 <script>
     export default {
-        props: ['banks', 'ticket_id'],
+        props: ['banks'],
         data: function () {
             return {
                 send: false,
                 loading: false,
+                minAmount: 5000,
                 bankList: JSON.parse(this.banks),
                 transferForm: {
                     from_id: 0,
                     to_id: 0,
                     amount: null,
-                    references: null,
-                    ticket_id: this.ticket_id,
+                    references: null
                 },
             }
         },
@@ -146,7 +171,7 @@
                 this.send = true;
 
                 this.$validator.validateAll().then(result => {
-                    if (result) {
+                    if (result && this.transferForm.amount >= this.minAmount) {
                         this.registerTransfer();
                     }
 

@@ -77,6 +77,9 @@
                                     <p class="text-danger" v-if="errors.has('amount')">
                                         El formato no es correcto
                                     </p>
+                                    <p class="text-danger" v-if="!errors.has('amount') && amount < minAmount">
+                                        El minimo es {{ minAmount }}
+                                    </p>
                                 </div>
                             </div>
 
@@ -162,6 +165,12 @@
                                         </p>
                                     </div>
 
+                                    <div class="alert alert-danger" v-if="send && total > myBalance">
+                                        <p class="text-danger">
+                                            No posee saldo suficiente.
+                                        </p>
+                                    </div>
+
                                     <div class="text-center">
                                         <button class="btn btn-success" v-if="! loading">
                                             Comprar
@@ -198,6 +207,7 @@
                 selected: false,
                 subtotal: 0,
                 total: 0,
+                minAmount: 300,
 
                 animalForm: {
                     animals: [],
@@ -257,7 +267,7 @@
             // Agrega un animal a la jugada
             addToTicket: function(evt) {
                 evt.preventDefault();
-                if (evt.keyCode == 13 && this.selected && parseInt(this.amount)) {
+                if (evt.keyCode == 13 && this.selected && parseInt(this.amount) && this.amount >= this.minAmount) {
                     this.animalForm.animals.push({
                         code: this.selected.code,
                         name: this.selected.name,
@@ -316,7 +326,7 @@
             validateData: function () {
                 this.send = true;
 
-                if (this.animalForm.sorts.length && this.animalForm.animals.length) {
+                if (this.animalForm.sorts.length && this.animalForm.animals.length && this.total <= this.myBalance) {
                     this.registerTicket();
                 }
             },

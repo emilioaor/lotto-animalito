@@ -157,7 +157,9 @@ class IndexController extends Controller
 
         return new JsonResponse([
             'success' => true,
-            'redirect' => route('user.results'),
+            'redirect' => route('user.results', [
+                'date' => isset($request->date) ? $request->date : null
+            ]),
         ]);
     }
 

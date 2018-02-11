@@ -80,17 +80,7 @@
                         </div>
 
                         @if(Auth::user()->level === \App\User::LEVEL_ADMIN)
-                            <div class="row">
 
-                                <div class="col-sm-6">
-                                    <p class="show-ticket__data">
-                                        Ticket:
-                                    <span class="bg-primary text-primary">
-                                        {{ $transfer->ticket->public_id }}
-                                    </span>
-                                    </p>
-                                </div>
-                            </div>
 
                             @if($transfer->status === \App\Transfer::STATUS_PENDING)
 

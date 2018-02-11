@@ -17,6 +17,17 @@
                 <div class="panel panel-default">
 
                     <div class="panel-body">
+                        <div class="alert alert-info">
+                            <p>
+                                <strong>ATENCIÓN:</strong>
+                                Utilice los siguientes datos para hacer su deposito o transferencia. Despues de hacer el pago registre en el siguiente formulario
+                                los datos del movimiento y en un periodo no mayor a una hora tendra su saldo disponible.
+                            </p>
+                            <p>
+                                <strong>Nota:</strong> En caso de efectuar el pago desde una cuenta de banco diferente a la de destino, tomará un periodo maximo
+                                de 24 horas habiles bancarias para recibir su saldo.
+                            </p>
+                        </div>
 
                         <register-transfer
                                 banks = "{{ json_encode($banks) }}"
@@ -25,14 +36,6 @@
                         </register-transfer>
 
                         <h3>Cuentas bancarias</h3>
-                        <p>
-                            Utilice los siguientes datos para hacer su deposito o transferencia. Despues de hacer el pago registre en el siguiente formulario
-                            los datos del movimiento y en un periodo no mayor a una hora tendra su saldo disponible.
-                        </p>
-                        <p>
-                            <strong>Nota:</strong> En caso de efectuar el pago desde una cuenta de banco diferente a la de destino, tomará un periodo maximo
-                            de 24 horas habiles bancarias para recibir su saldo.
-                        </p>
 
                         <div class="row">
 

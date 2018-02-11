@@ -46426,6 +46426,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['banks'],
@@ -47263,6 +47264,7 @@ var render = function() {
                         type: "text",
                         id: "number_account",
                         name: "number_account",
+                        maxlength: "20",
                         placeholder: "Número de cuenta",
                         "data-vv-rules": "required|regex:^[0-9]{20}$"
                       },
@@ -48114,6 +48116,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['animals', 'balance', 'sorts', 'block_balance'],
@@ -48129,6 +48140,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             selected: false,
             subtotal: 0,
             total: 0,
+            minAmount: 300,
 
             animalForm: {
                 animals: [],
@@ -48188,7 +48200,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         // Agrega un animal a la jugada
         addToTicket: function addToTicket(evt) {
             evt.preventDefault();
-            if (evt.keyCode == 13 && this.selected && parseInt(this.amount)) {
+            if (evt.keyCode == 13 && this.selected && parseInt(this.amount) && this.amount >= this.minAmount) {
                 this.animalForm.animals.push({
                     code: this.selected.code,
                     name: this.selected.name,
@@ -48247,7 +48259,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         validateData: function validateData() {
             this.send = true;
 
-            if (this.animalForm.sorts.length && this.animalForm.animals.length) {
+            if (this.animalForm.sorts.length && this.animalForm.animals.length && this.total <= this.myBalance) {
                 this.registerTicket();
             }
         },
@@ -48404,6 +48416,16 @@ var render = function() {
                     ? _c("p", { staticClass: "text-danger" }, [
                         _vm._v(
                           "\n                                    El formato no es correcto\n                                "
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  !_vm.errors.has("amount") && _vm.amount < _vm.minAmount
+                    ? _c("p", { staticClass: "text-danger" }, [
+                        _vm._v(
+                          "\n                                    El minimo es " +
+                            _vm._s(_vm.minAmount) +
+                            "\n                                "
                         )
                       ])
                     : _vm._e()
@@ -48574,6 +48596,16 @@ var render = function() {
                               _c("p", { staticClass: "text-danger" }, [
                                 _vm._v(
                                   "\n                                        Debe seleccionar al menos un sorteo.\n                                    "
+                                )
+                              ])
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.send && _vm.total > _vm.myBalance
+                          ? _c("div", { staticClass: "alert alert-danger" }, [
+                              _c("p", { staticClass: "text-danger" }, [
+                                _vm._v(
+                                  "\n                                        No posee saldo suficiente.\n                                    "
                                 )
                               ])
                             ])
@@ -48792,20 +48824,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['banks', 'ticket_id'],
+    props: ['banks'],
     data: function data() {
         return {
             send: false,
             loading: false,
+            minAmount: 5000,
             bankList: JSON.parse(this.banks),
             transferForm: {
                 from_id: 0,
                 to_id: 0,
                 amount: null,
-                references: null,
-                ticket_id: this.ticket_id
+                references: null
             }
         };
     },
@@ -48835,7 +48892,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.send = true;
 
             this.$validator.validateAll().then(function (result) {
-                if (result) {
+                if (result && _this.transferForm.amount >= _this.minAmount) {
                     _this.registerTransfer();
                 }
             });
@@ -49104,7 +49161,88 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-sm-6" })
+        _c("div", { staticClass: "col-sm-6" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "amount" } }, [_vm._v("Monto")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.transferForm.amount,
+                  expression: "transferForm.amount"
+                },
+                { name: "validate", rawName: "v-validate" }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "number",
+                name: "amount",
+                id: "amount",
+                placeholder: "Monto",
+                "data-vv-rules": "required"
+              },
+              domProps: { value: _vm.transferForm.amount },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.transferForm, "amount", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value:
+                      _vm.send &&
+                      _vm.hasError("amount", "required", _vm.errors),
+                    expression: "send && hasError('amount', 'required', errors)"
+                  }
+                ],
+                staticClass: "text-danger"
+              },
+              [
+                _vm._v(
+                  "\n                    Este campo es requerido\n                "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value:
+                      _vm.send &&
+                      !_vm.hasError("amount", "required", _vm.errors) &&
+                      _vm.transferForm.amount < _vm.minAmount,
+                    expression:
+                      "send && !hasError('amount', 'required', errors) && transferForm.amount < minAmount"
+                  }
+                ],
+                staticClass: "text-danger"
+              },
+              [
+                _vm._v(
+                  "\n                    El minimo es " +
+                    _vm._s(_vm.minAmount) +
+                    "\n                "
+                )
+              ]
+            )
+          ])
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
@@ -49125,7 +49263,7 @@ var render = function() {
               },
               [
                 _c("i", { staticClass: "glyphicon glyphicon-transfer" }),
-                _vm._v("\n                    Registrar pago\n                ")
+                _vm._v("\n                    Recargar\n                ")
               ]
             ),
             _vm._v(" "),
@@ -49881,6 +50019,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['banks', 'bank_id', 'number_account', 'name', 'identity_card'],
@@ -50088,6 +50227,7 @@ var render = function() {
                 type: "text",
                 name: "number_account",
                 id: "number_account",
+                maxlength: "20",
                 placeholder: "Número de cuenta",
                 "data-vv-rules": "required|regex:^[0-9]{20}$"
               },

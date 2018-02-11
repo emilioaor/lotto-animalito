@@ -21,10 +21,11 @@
                         <th>Referencia</th>
                         <th>Fecha</th>
                         @if(Auth::user()->level === \App\User::LEVEL_ADMIN)
-                            <th>Ticket</th>
+                            <th>Usuario</th>
                         @endif
                         <th>Estatus</th>
                         <th>Monto</th>
+                        <th>Aprobado</th>
                     </tr>
                     </thead>
 
@@ -38,7 +39,7 @@
                                 </td>
                                 <td>{{ $transfer->created_at->format('d-m-Y h:i a') }}</td>
                                 @if(Auth::user()->level === \App\User::LEVEL_ADMIN)
-                                    <td>{{ $transfer->ticket->public_id }}</td>
+                                    <td>{{ $transfer->user->email }}</td>
                                 @endif
                                 <td>
                                     @if($transfer->status === \App\Transfer::STATUS_PENDING)
@@ -50,6 +51,7 @@
                                     @endif
                                 </td>
                                 <td>{{ number_format($transfer->amount, 2, ',', '.') }}</td>
+                                <td>{{ number_format($transfer->approved, 2, ',', '.') }}</td>
                             </tr>
                         @endforeach
                     </tbody>

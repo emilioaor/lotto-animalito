@@ -15,7 +15,7 @@ class Transfer extends Model
     protected $table = 'transfers';
 
     protected $fillable = [
-        'ticket_id', 'from_id', 'to_id', 'amount', 'references', 'status', 'approved', 'comment',
+        'user_id', 'from_id', 'to_id', 'amount', 'references', 'status', 'approved', 'comment',
     ];
 
     public function __construct(array $attributes = [])
@@ -30,9 +30,9 @@ class Transfer extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function ticket()
+    public function user()
     {
-        return $this->belongsTo('App\Ticket', 'ticket_id');
+        return $this->belongsTo('App\User', 'user_id');
     }
 
     /**

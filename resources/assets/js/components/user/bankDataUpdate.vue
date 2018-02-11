@@ -41,6 +41,7 @@
                             class="form-control"
                             name="number_account"
                             id="number_account"
+                            maxlength="20"
                             placeholder="Número de cuenta"
                             v-model="bankUpdateForm.number_account"
                             v-validate

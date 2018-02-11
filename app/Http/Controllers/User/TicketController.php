@@ -80,6 +80,11 @@ class TicketController extends Controller
                 return new JsonResponse(['success' => true, 'redirect' => route('ticket.create')]);
             }
 
+            // Descuenta el balance del usuario
+            $user = $ticket->user;
+            $user->balance -= $ticket->total();
+            $user->save();
+
         DB::commit();
 
         $this->sessionMessage('message.ticket.register');

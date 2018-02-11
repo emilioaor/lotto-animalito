@@ -187,6 +187,7 @@
                                         class="form-control"
                                         id="number_account"
                                         name="number_account"
+                                        maxlength="20"
                                         placeholder="Número de cuenta"
                                         v-model="registerUserForm.number_account"
                                         v-validate

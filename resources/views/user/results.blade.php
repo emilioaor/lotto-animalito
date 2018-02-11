@@ -20,6 +20,7 @@
                                 <input
                                     type="date"
                                     class="form-control"
+                                    max="{{ date('Y-m-d') }}"
                                     value="{{ $date }}"
                                     onchange="location.href = '{{ route('user.results') }}?date=' + this.value"
                                 >

@@ -54,7 +54,7 @@
                                 <p class="show-ticket__data">
                                     Jugado:
                                     <span class="bg-info text-info">
-                                        {{ number_format($ticket->total() * count($ticket->dailySorts), 2, ',', '.') }}
+                                        {{ number_format($ticket->total(), 2, ',', '.') }}
                                     </span>
                                 </p>
                             </div>

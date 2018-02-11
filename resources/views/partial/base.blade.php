@@ -56,10 +56,10 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ route('withdraw.create') }}">Retirar dinero</a></li>
                                 <li><a href="{{ route('transfer.create') }}">Depositar dinero</a></li>
+                                <li><a href="{{ route('withdraw.create') }}">Retirar dinero</a></li>
                                 <li><a href="{{ route('withdraw.index') }}">Historial de retiros</a></li>
-                                <li><a href="{{ route('transfer.index') }}">Historial de pagos</a></li>
+                                <li><a href="{{ route('transfer.index') }}">Historial de recargas</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">

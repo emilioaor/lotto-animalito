@@ -27,7 +27,7 @@ class Ticket extends Model
     public function __construct(array $attributes = [])
     {
         $this->public_id = self::PUBLIC_ID_PREFIX . strtotime((new \DateTime('now'))->format('Y-m-d h:i:s'));
-        $this->status = self::STATUS_PENDING;
+        $this->status = self::STATUS_ACTIVE;
         $this->user_id = Auth::user()->id;
         parent::__construct($attributes);
     }
@@ -64,16 +64,6 @@ class Ticket extends Model
     }
 
     /**
-     * Todas las transferencias registradas a este ticket
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function transfers()
-    {
-        return $this->hasMany('App\Transfer', 'ticket_id');
-    }
-
-    /**
      * Calcula el total jugado en el ticket
      *
      * @return int
@@ -85,7 +75,7 @@ class Ticket extends Model
             $total += $detail->amount;
         }
 
-        return $total;
+        return ($total * count($this->dailySorts));
     }
 
     /**
@@ -123,5 +113,38 @@ class Ticket extends Model
         }
 
         return $gainAmount;
+    }
+
+    /**
+     * Indica si el ticket es ganador
+     *
+     * @return int
+     */
+    public function isGain()
+    {
+        if ($this->status !== self::STATUS_ACTIVE) {
+            return false;
+        }
+
+        // Verifico resultados por cada sorteo
+        foreach ($this->dailySorts as $dailySort) {
+
+            // Busco todos los animalitos jugados
+            foreach ($this->ticketDetails as $detail) {
+
+                // Busco un resultado para la fecha, sorteo y animalito
+                $result = Result::where('date', $this->created_at->format('Y-m-d'))
+                    ->where('daily_sort_id', $dailySort->id)
+                    ->where('animal_id', $detail->animal_id)
+                    ->first()
+                ;
+
+                if ($result) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

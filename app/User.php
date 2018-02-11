@@ -43,6 +43,15 @@ class User extends Authenticatable
         parent::__construct($attributes);
     }
 
+    /**
+     * Todas las transferencias del usuario
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function transfers()
+    {
+        return $this->hasMany('App\Transfer', 'user_id');
+    }
 
     /**
      * Banco configurado por el usuario

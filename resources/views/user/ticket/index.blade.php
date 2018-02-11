@@ -42,7 +42,9 @@
                                     <td>{{ $ticket->user->email }}</td>
                                 @endif
                                 <td>
-                                    @if($ticket->status === \App\Ticket::STATUS_ACTIVE)
+                                    @if($ticket->isGain())
+                                        <span class="bg-primary text-primary">Ganador</span>
+                                    @elseif($ticket->status === \App\Ticket::STATUS_ACTIVE)
                                         <span class="bg-success text-success">Activo</span>
                                     @elseif($ticket->status === \App\Ticket::STATUS_CANCEL)
                                         <span class="bg-danger text-danger">Anulado</span>

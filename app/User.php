@@ -125,7 +125,7 @@ class User extends Authenticatable
                 $data['data'][$c] = 0;
             }
 
-            $data['data'][$c] += $ticket->total();
+            $data['data'][$c] += $ticket->gainAmount();
         }
 
         return $data;

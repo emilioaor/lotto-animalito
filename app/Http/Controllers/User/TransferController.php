@@ -15,6 +15,27 @@ use Illuminate\Support\Facades\DB;
 class TransferController extends Controller
 {
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        // Solo los usuarios admin pueden hacer operaciones aparte de las basicas
+        $this->middleware('admin', [
+            'except' => [
+                'index',
+                'create',
+                'store',
+                'show',
+            ]
+        ]);
+
+        // Los usuarios normales solo pueden visualizar sus propias recargas
+        $this->middleware('owner.transfer', [
+            'only' => ['show']
+        ]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

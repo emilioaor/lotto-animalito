@@ -17,6 +17,17 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class TicketController extends Controller
 {
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        // Los usuarios normales solo pueden visualizar sus propios tickets
+        $this->middleware('owner.ticket', [
+            'only' => ['show']
+        ]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

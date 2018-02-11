@@ -9,18 +9,23 @@ Route::get('/emailExists/{email}', ['uses' => 'Index\IndexController@emailExists
 Route::get('/logout', ['uses' => 'Index\IndexController@logout', 'as' => 'index.logout']);
 
 //  Rutas con autenticacion
-Route::group(['prefix' => 'user'], function() {
+Route::group(['prefix' => 'user', 'middleware' => 'check'], function() {
     Route::get('/', ['uses' => 'User\IndexController@index', 'as' => 'user.index']);
     Route::get('/config', ['uses' => 'User\IndexController@config', 'as' => 'user.config']);
     Route::post('/bankUpdate', ['uses' => 'User\IndexController@bankUpdate', 'as' => 'user.bankUpdate']);
     Route::post('/changePassword', ['uses' => 'User\IndexController@changePassword', 'as' => 'user.changePassword']);
     Route::get('/results', ['uses' => 'User\IndexController@results', 'as' => 'user.results']);
-    Route::post('/setGain', ['uses' => 'User\IndexController@setGain', 'as' => 'user.setGain']);
     Route::get('/graphicData', ['uses' => 'User\IndexController@graphicData', 'as' => 'user.graphicData']);
 
+    // Middleware en el constructor del controlador
     Route::resource('ticket', 'User\TicketController');
     Route::resource('transfer', 'User\TransferController');
-    Route::post('transfer/{transfer}/changeStatus/{status}', ['uses' => 'User\TransferController@changeStatus', 'as' => 'transfer.changeStatus']);
     Route::resource('withdraw', 'User\WithdrawController');
-    Route::post('withdraw/{withdraw}/changeStatus/{status}', ['uses' => 'User\WithdrawController@changeStatus', 'as' => 'withdraw.changeStatus']);
+
+    // Admin
+    Route::group(['middleware' => 'admin'], function() {
+        Route::post('/setGain', ['uses' => 'User\IndexController@setGain', 'as' => 'user.setGain']);
+        Route::post('transfer/{transfer}/changeStatus/{status}', ['uses' => 'User\TransferController@changeStatus', 'as' => 'transfer.changeStatus']);
+        Route::post('withdraw/{withdraw}/changeStatus/{status}', ['uses' => 'User\WithdrawController@changeStatus', 'as' => 'withdraw.changeStatus']);
+    });
 });

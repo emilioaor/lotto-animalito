@@ -14,6 +14,27 @@ use Illuminate\Support\Facades\Hash;
 class WithdrawController extends Controller
 {
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        // Solo los usuarios admin pueden hacer operaciones aparte de las basicas
+        $this->middleware('admin', [
+            'except' => [
+                'index',
+                'create',
+                'store',
+                'show',
+            ]
+        ]);
+
+        // Los usuarios normales solo pueden visualizar sus propios retiros
+        $this->middleware('owner.withdraw', [
+            'only' => ['show']
+        ]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -70,7 +91,7 @@ class WithdrawController extends Controller
 
         return new JsonResponse([
             'success' => true,
-            'redirect' => route('withdraw.index'),
+            'redirect' => route('withdraw.show', ['withdraw' => $withdraw->id]),
         ]);
     }
 

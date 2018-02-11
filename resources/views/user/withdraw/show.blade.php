@@ -49,17 +49,14 @@
                                 </p>
                             </div>
 
-                            @if(Auth::user()->level === \App\User::LEVEL_ADMIN)
-
-                                <div class="col-sm-6">
-                                    <p class="show-ticket__data">
-                                        Usuario:
-                                <span class="bg-primary text-primary">
-                                    {{ $withdraw->user->email }}
-                                </span>
-                                    </p>
-                                </div>
-                            @endif
+                            <div class="col-sm-6">
+                                <p class="show-ticket__data">
+                                    Usuario:
+                            <span class="bg-primary text-primary">
+                                {{ $withdraw->user->email }}
+                            </span>
+                                </p>
+                            </div>
                         </div>
 
                         <div class="row">

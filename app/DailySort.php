@@ -67,4 +67,14 @@ class DailySort extends Model
                 ->get()
         ;
     }
+
+    /**
+     * Tiempo en formato H:i:s a
+     *
+     * @return string
+     */
+    public function timeFormat()
+    {
+        return \DateTime::createFromFormat('H:i:s', $this->time)->format('h:i:s a');
+    }
 }

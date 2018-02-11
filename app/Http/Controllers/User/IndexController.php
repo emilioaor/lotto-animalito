@@ -228,4 +228,14 @@ class IndexController extends Controller
             }
         }
     }
+
+    /**
+     * Retorna la data de la grafica
+     *
+     * @return JsonResponse
+     */
+    public function graphicData()
+    {
+        return new JsonResponse(Auth::user()->graphicData());
+    }
 }

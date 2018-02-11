@@ -67,7 +67,7 @@
 
                                     @foreach($ticket->dailySorts as $sort)
                                         <span class="bg-warning text-warning">
-                                            {{ $sort->time }}
+                                            {{ $sort->timeFormat() }}
                                         </span>
                                     @endforeach
                                 </p>

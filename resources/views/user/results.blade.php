@@ -53,7 +53,7 @@
                             @foreach($sorts as $dailySort)
                                 <tr>
                                     <td>{{ $dailySort->sort->name }}</td>
-                                    <td>{{ $dailySort->time }}</td>
+                                    <td>{{ $dailySort->timeFormat() }}</td>
                                     <td>
                                         @foreach($results as $result)
                                             @if($result->daily_sort_id == $dailySort->id)

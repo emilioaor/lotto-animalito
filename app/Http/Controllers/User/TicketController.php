@@ -50,6 +50,10 @@ class TicketController extends Controller
 
         $animals = Animal::all();
 
+        foreach ($dailySorts as &$ds) {
+            $ds->time = $ds->timeFormat();
+        }
+
         return view('user.ticket.create', [
             'animals' => $animals,
             'sorts' => $dailySorts,

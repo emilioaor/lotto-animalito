@@ -16,6 +16,7 @@ Route::group(['prefix' => 'user'], function() {
     Route::post('/changePassword', ['uses' => 'User\IndexController@changePassword', 'as' => 'user.changePassword']);
     Route::get('/results', ['uses' => 'User\IndexController@results', 'as' => 'user.results']);
     Route::post('/setGain', ['uses' => 'User\IndexController@setGain', 'as' => 'user.setGain']);
+    Route::get('/graphicData', ['uses' => 'User\IndexController@graphicData', 'as' => 'user.graphicData']);
 
     Route::resource('ticket', 'User\TicketController');
     Route::resource('transfer', 'User\TransferController');

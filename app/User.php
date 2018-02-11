@@ -92,4 +92,42 @@ class User extends Authenticatable
     {
         return $this->balance - $this->block_balance;
     }
+
+    /**
+     * Retorna las ganancias de la semana para este usuario
+     *
+     * @return array
+     */
+    public function graphicData()
+    {
+        $now = new \DateTime();
+        $oneMonthBefore = clone $now;
+        $oneMonthBefore->modify('-1 month');
+
+        // Busco todos los tickets del mes para este usuario
+        $tickets = Ticket::where('created_at', '>=', $oneMonthBefore)
+            ->where('user_id', $this->id)
+            ->orderBy('created_at')
+            ->get()
+        ;
+
+        $data['categories'] = [];
+        $data['data'] = [];
+        $c = -1;
+
+        foreach ($tickets as $ticket) {
+            $date = $ticket->created_at->format('Y-m-d');
+
+            if (! in_array($date, $data['categories'])) {
+                // Agrego la fecha como categoria
+                $data['categories'][] = $date;
+                $c++;
+                $data['data'][$c] = 0;
+            }
+
+            $data['data'][$c] += $ticket->total();
+        }
+
+        return $data;
+    }
 }

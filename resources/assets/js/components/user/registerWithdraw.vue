@@ -17,7 +17,7 @@
                         name="amount"
                         v-model="withdrawForm.amount"
                         v-validate
-                        data-vv-rules="required|numeric|min_value:500"
+                        data-vv-rules="required|numeric|min_value:5000"
                     >
                     <p
                         class="text-danger"
@@ -35,7 +35,7 @@
                         class="text-danger"
                         v-show="send && hasError('amount', 'min_value', errors)"
                     >
-                        El minimo de cobro es 500 Bsf
+                        El minimo de cobro es 5000 Bsf
                     </p>
                     <p
                         class="text-danger"

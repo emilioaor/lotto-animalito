@@ -39,7 +39,7 @@ class TicketController extends Controller
      */
     public function create()
     {
-        $now = new \DateTime();
+        $now = (new \DateTime())->modify('+5 minutes');
         $dailySorts = DailySort::where('time', '>', $now)->get();
 
         if (! count($dailySorts)) {
@@ -114,7 +114,7 @@ class TicketController extends Controller
                 $ticketDetail = new TicketDetail();
                 $ticketDetail->ticket_id = $ticket->id;
                 $ticketDetail->animal_id = $animalAux->id;
-                $ticketDetail->amount = $animal['amount'];
+                $ticketDetail->amount = $animal['amount'] >= 300 ? $animal['amount'] : 300;
                 $ticketDetail->save();
             }
         }
@@ -129,15 +129,11 @@ class TicketController extends Controller
      */
     private function addSortsTicket(array $sorts, Ticket $ticket)
     {
-        $now = new \DateTime();
-
         foreach ($sorts as $sort) {
             $dailySort = DailySort::find($sort['id']);
 
             // Verifica que no ha pasado la hora del sorteo
-            $sortTime = \DateTime::createFromFormat('H:i:s', $dailySort->time);
-
-            if ($now > $sortTime) {
+            if ($dailySort->isClose()) {
                 return false;
             }
 

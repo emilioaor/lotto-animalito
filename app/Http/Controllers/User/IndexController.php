@@ -95,19 +95,24 @@ class IndexController extends Controller
     public function results(Request $request)
     {
         if (isset($request->date)) {
-            $date = date('Y-m-d', strtotime($request->date));
+            $date = \DateTime::createFromFormat('Y-m-d', $request->date);
         } else {
-            $date = date('Y-m-d');
+            $date = new \DateTime();
         }
 
         $sorts = DailySort::orderBy('time')->get();
-        $results = Result::where('date', $date)->get();
+        $results = Result::where('date', $date->format('Y-m-d'))->get();
         $animals = Animal::all();
+
+        foreach ($sorts as &$sort) {
+            $sort->timeFormat = $sort->timeFormat();
+            $sort->isOpen = $sort->isOpen($date);
+        }
 
         return view('user.results', [
             'sorts' => $sorts,
             'results' => $results,
-            'date' => $date,
+            'date' => $date->format('Y-m-d'),
             'animals' => $animals,
         ]);
     }

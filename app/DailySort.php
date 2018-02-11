@@ -69,12 +69,59 @@ class DailySort extends Model
     }
 
     /**
+     * Convierte la hora a \DateTime
+     *
+     * @return \DateTime
+     */
+    public function timeToDateTime()
+    {
+        return \DateTime::createFromFormat('H:i:s', $this->time);
+    }
+
+    /**
      * Tiempo en formato H:i:s a
      *
      * @return string
      */
     public function timeFormat()
     {
-        return \DateTime::createFromFormat('H:i:s', $this->time)->format('h:i:s a');
+        return $this->timeToDateTime()->format('h:i:s a');
+    }
+
+    /**
+     * Indica si el sorteo esta abierto
+     *
+     * @param \DateTime $date
+     * @return bool
+     */
+    public function isOpen(\DateTime $date = null)
+    {
+        if (is_null($date)) {
+            $date = new \DateTime();
+        }
+        $timeSort = $this->timeToDateTime()->modify('-5 minutes');
+
+        if ($date->format('Y-m-d') !== $timeSort->format('Y-m-d')) {
+            // Si es un dia diferente el sorteo esta cerrado
+            return false;
+        }
+
+        if ($timeSort > $date) {
+            // Si es el mismo dia y la hora es mayor sigue abierto el sorteo
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Indica si el sorteo esta cerrado
+     *
+     * @param \DateTime $date
+     * @return bool
+     */
+    public function isClose(\DateTime $date = null)
+    {
+        return ! $this->isOpen($date);
     }
 }

@@ -116,7 +116,7 @@ class User extends Authenticatable
         $c = -1;
 
         foreach ($tickets as $ticket) {
-            $date = $ticket->created_at->format('Y-m-d');
+            $date = $ticket->created_at->format('d-m-Y');
 
             if (! in_array($date, $data['categories'])) {
                 // Agrego la fecha como categoria

@@ -32,8 +32,9 @@
                             <option
                                     v-for="sort in sortList"
                                     v-bind:value="sort.id"
+                                    v-if="! sort.isOpen"
                                     >
-                                {{ sort.time }}
+                                {{ sort.timeFormat }}
                             </option>
                         </select>
                         <p class="text-danger" v-show="send && hasError('sort_id', 'regex', errors)">

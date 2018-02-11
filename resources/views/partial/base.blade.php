@@ -22,9 +22,15 @@
                     <span class="icon-bar"></span>
                 </button>
                 @if(Auth::check())
-                    <a class="navbar-brand" href="{{ route('user.index') }}">{{ env('APP_NAME') }}</a>
+                    <a class="navbar-brand" href="{{ route('user.index') }}">
+                        <i class="glyphicon glyphicon-home"></i>
+                        {{ env('APP_NAME') }}
+                    </a>
                 @else
-                    <a class="navbar-brand" href="{{ route('index.index') }}">{{ env('APP_NAME') }}</a>
+                    <a class="navbar-brand" href="{{ route('index.index') }}">
+                        <i class="glyphicon glyphicon-home"></i>
+                        {{ env('APP_NAME') }}
+                    </a>
                 @endif
             </div>
 
@@ -32,16 +38,38 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     @if(Auth::check())
-                        <li><a href="{{ route('user.results') }}">Resultados </a></li>
+                        <li><a href="{{ route('user.results') }}">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                                Resultados
+                            </a>
+                        </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tickets <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="glyphicon glyphicon-th-list"></i>
+                                Tickets
+                                <span class="caret"></span>
+                            </a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ route('ticket.create') }}">Registrar ticket</a></li>
-                                <li><a href="{{ route('ticket.index') }}">Lista de tickets</a></li>
+                                <li><a href="{{ route('ticket.create') }}">
+                                        <i class="glyphicon glyphicon-plus"></i>
+                                        Registrar ticket
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('ticket.index') }}">
+                                        <i class="glyphicon glyphicon-list-alt"></i>
+                                        Lista de tickets
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     @else
-                        <li><a href="{{ route('index.register') }}">Registro</a></li>
+                        <li>
+                            <a href="{{ route('index.register') }}">
+                                <i class="glyphicon glyphicon glyphicon-th-list"></i>
+                                Registro
+                            </a>
+                        </li>
                     @endif
                 </ul>
 
@@ -56,19 +84,49 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ route('transfer.create') }}">Depositar dinero</a></li>
-                                <li><a href="{{ route('withdraw.create') }}">Retirar dinero</a></li>
-                                <li><a href="{{ route('withdraw.index') }}">Historial de retiros</a></li>
-                                <li><a href="{{ route('transfer.index') }}">Historial de recargas</a></li>
+                                <li>
+                                    <a href="{{ route('transfer.create') }}">
+                                        <i class="glyphicon glyphicon-circle-arrow-up"></i>
+                                        Depositar dinero
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('withdraw.create') }}">
+                                        <i class="glyphicon glyphicon-circle-arrow-down"></i>
+                                        Retirar dinero
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('withdraw.index') }}">
+                                        <i class="glyphicon glyphicon-menu-down"></i>
+                                        Historial de retiros
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('transfer.index') }}">
+                                        <i class="glyphicon glyphicon-menu-up"></i>
+                                        Historial de recargas
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->email }} <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="glyphicon glyphicon-user"></i>
+                                {{ Auth::user()->email }}
+                                <span class="caret"></span>
+                            </a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ route('user.config') }}">Configuración</a></li>
+                                <li>
+                                    <a href="{{ route('user.config') }}">
+                                        <i class="glyphicon glyphicon-cog"></i>
+                                        Configuración
+                                    </a>
+                                </li>
                                 <li role="separator" class="divider"></li>
                                 <li>
                                     <a href="{{ route('index.logout') }}">
+                                        <i class="glyphicon glyphicon-log-out"></i>
                                         Logout
                                     </a>
                                 </li>

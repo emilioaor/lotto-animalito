@@ -24,7 +24,7 @@
                         <th>Estatus</th>
                         <th>Monto</th>
                         @if(Auth::user()->level === \App\User::LEVEL_ADMIN)
-                            <th width="5%"></th>
+                            <th width="10%" class="text-center"></th>
                         @endif
                     </thead>
 
@@ -46,9 +46,9 @@
                             </td>
                             <td>{{ number_format($withdraw->amount, 2, ',', '.') }}</td>
                             @if(Auth::user()->level === \App\User::LEVEL_ADMIN)
-                                <td>
-                                    <a href="{{ route('withdraw.show', ['withdraw' => $withdraw->id]) }}" class="btn btn-primary">
-                                        <i class="glyphicon glyphicon-eye-open"></i>
+                                <td class="text-center">
+                                    <a href="{{ route('withdraw.show', ['withdraw' => $withdraw->id]) }}">
+                                        <i class="glyphicon glyphicon-eye-open"></i> Detalle
                                     </a>
                                 </td>
                             @endif

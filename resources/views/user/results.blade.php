@@ -46,6 +46,7 @@
                             <tr>
                                 <th>Sorteo</th>
                                 <th>Hora</th>
+                                <th>Estatus</th>
                                 <th>Ganador</th>
                             </tr>
                         </thead>
@@ -55,8 +56,21 @@
                                     <td>{{ $dailySort->sort->name }}</td>
                                     <td>{{ $dailySort->timeFormat() }}</td>
                                     <td>
+                                        @if($dailySort->isOpen)
+                                            <span class="text-success bg-success">
+                                                Abierto
+                                            </span>
+                                        @else
+                                            <span class="text-danger bg-danger">
+                                                Cerrado
+                                            </span>
+                                        @endif
+                                    </td>
+                                    <td>
                                         @foreach($results as $result)
                                             @if($result->daily_sort_id == $dailySort->id)
+                                                <img    width="20px"
+                                                        src="{{ asset('img/animals/' . $result->animal->cleanName() . '.jpg') }}">
                                                 {{ $result->animal->name }}
                                             @endif
                                         @endforeach

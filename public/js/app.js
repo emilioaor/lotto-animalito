@@ -49567,7 +49567,7 @@ var render = function() {
                 placeholder: "Monto a solicitar",
                 id: "amount",
                 name: "amount",
-                "data-vv-rules": "required|numeric|min_value:500"
+                "data-vv-rules": "required|numeric|min_value:5000"
               },
               domProps: { value: _vm.withdrawForm.amount },
               on: {
@@ -49641,7 +49641,7 @@ var render = function() {
               },
               [
                 _vm._v(
-                  "\n                    El minimo de cobro es 500 Bsf\n                "
+                  "\n                    El minimo de cobro es 5000 Bsf\n                "
                 )
               ]
             ),
@@ -51409,6 +51409,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['animals', 'sorts', 'date'],
@@ -51568,13 +51569,15 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _vm._l(_vm.sortList, function(sort) {
-                    return _c("option", { domProps: { value: sort.id } }, [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(sort.time) +
-                          "\n                        "
-                      )
-                    ])
+                    return !sort.isOpen
+                      ? _c("option", { domProps: { value: sort.id } }, [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(sort.timeFormat) +
+                              "\n                        "
+                          )
+                        ])
+                      : _vm._e()
                   })
                 ],
                 2

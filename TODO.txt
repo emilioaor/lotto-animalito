@@ -1,0 +1,10 @@
+// TODO Envios de correos
+// TODO Datos reales de mis cuentas
+// TODO Middleware
+
+// TODO Iconos en enlaces del navbar
+// TODO Enlace hacia el registro en cuadro de login
+// TODO funcionalidad para agregar sorteos diarios
+// TODO recuperar contraseña
+// TODO Tope en ventas para cada sorteo
+// TODO input fecha compatible en resultados

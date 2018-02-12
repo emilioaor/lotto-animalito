@@ -10,6 +10,7 @@
 
     <register-user-form
         banks="{{ json_encode($banks) }}"
+        login_url = "{{ route('index.index') }}"
     >
 
     </register-user-form>

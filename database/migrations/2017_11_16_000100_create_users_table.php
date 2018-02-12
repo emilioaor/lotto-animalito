@@ -25,6 +25,8 @@ class CreateUsersTable extends Migration
             $table->float('block_balance', 10, 2);
             $table->foreign('bank_id')->references('id')->on('banks');
             $table->integer('level');
+            $table->string('password_temp')->nullable();
+            $table->dateTime('password_temp_expiration')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

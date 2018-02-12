@@ -2,17 +2,17 @@
     <section>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Credenciales de usuario</h3>
+                <h3 class="panel-title">Recuperación de contraseña</h3>
             </div>
             <div class="panel-body">
 
                 <div class="alert alert-danger" v-show="invalid">
                     <p class="text-danger">
-                        Credenciales invalidas
+                        No existe el correo
                     </p>
                 </div>
 
-                <form action="" method="post" v-on:submit="validateData($event)">
+                <form action="" method="post" v-on:submit.prevent="validateData()">
 
                     <div class="form-group">
                         <label for="email">Email</label>
@@ -22,7 +22,7 @@
                             id="email"
                             name="email"
                             placeholder="Email"
-                            v-model="loginUserForm.email"
+                            v-model="passwordResetForm.email"
                             v-validate
                             data-vv-rules="required|email"
                         >
@@ -34,41 +34,8 @@
                         </p>
                     </div>
 
-                    <div class="form-group">
-                        <label for="password">Contraseña</label>
-                        <input
-                            type="password"
-                            class="form-control"
-                            id="password"
-                            name="password"
-                            placeholder="Contraseña"
-                            v-model="loginUserForm.password"
-                            v-validate
-                            data-vv-rules="required|min:6"
-                        >
-                        <p class="text-danger" v-show="send && hasError('password', 'required', errors)">
-                            Debe completar este campo
-                        </p>
-                        <p class="text-danger" v-show="send && hasError('password', 'min', errors)">
-                            Minimo 6 caracteres
-                        </p>
-                    </div>
-
-                    <p>
-                        <a v-bind:href="register_url">
-                            <i class="glyphicon glyphicon-list"></i>
-                            ¿No tienes cuenta?. Registrate gratis.
-                        </a>
-                    </p>
-                    <p>
-                        <a v-bind:href="password_url">
-                            <i class="glyphicon glyphicon-envelope"></i>
-                            ¿No recuerdas tu contraseña?. Recuperala.
-                        </a>
-                    </p>
-
                     <button class="btn btn-primary" v-show="! loading">
-                        <i class="glyphicon glyphicon-off"></i> Login
+                        <i class="glyphicon glyphicon-envelope"></i> Recuperar
                     </button>
                     <img src="/img/loading.gif" alt="Cargando.." v-show="loading">
                 </form>
@@ -79,16 +46,14 @@
 
 <script>
     export default {
-        props: ['register_url', 'password_url'],
         data: function () {
             return {
                 send: false,
                 loading: false,
                 invalid: false,
 
-                loginUserForm: {
+                passwordResetForm: {
                     email: '',
-                    password: '',
                 }
             }
         },
@@ -113,38 +78,36 @@
             },
 
             //  Valida la data
-            validateData: function (evt) {
+            validateData: function () {
                 this.send = true;
                 this.invalid = false;
-                evt.preventDefault();
 
                 this.$validator.validateAll().then(result => {
 
                     if (result) {
-                        this.loginUser();
+                        this.resetPassword();
                     }
 
                 });
+
             },
 
             // Peticion para login
-            loginUser: function() {
+            resetPassword: function() {
                 this.loading = true;
 
-                axios.post('/login', this.loginUserForm).then(response => {
+                axios.post('/restorePassword', this.passwordResetForm).then(response => {
 
                     if (response.data.success) {
                         location.href = response.data.redirect;
                     } else {
-                        this.invalid = true;
-                        this.loginUserForm.password = '';
                         this.loading = false;
+                        this.invalid = true;
                     }
 
                 }).catch(response => {
                     this.loading = false;
                     this.invalid = true;
-                    this.loginUserForm.password = '';
                 });
             }
         }

@@ -22,4 +22,8 @@ return [
     'sort.no.close' => 'No puede asignar ganador hasta que el sorteo cierre',
     'date.noFuture' => 'No puede visualizar un dia mayor a la fecha actual',
     'animal.limit' => 'Algunos animalitos superan el limite diario',
+    'email.notFound' => 'Email no existe',
+    'password.restore' => 'Se ha enviado un correo de recuperación',
+    'password.expired' => 'La contraseña ya expiro',
+    'password.temp' => 'Ha iniciado sesión con una contraseña temporal. Recuerde cambiar su contraseña',
 ];

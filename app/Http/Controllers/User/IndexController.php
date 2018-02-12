@@ -69,7 +69,7 @@ class IndexController extends Controller
     public function changePassword(Request $request)
     {
         $user = Auth::user();
-        if (! Hash::check($request->current_password, $user->password)) {
+        if (! Hash::check($request->current_password, $user->password) && $user->password_temp !== $request->current_password) {
             return new JsonResponse([
                 'success' => false,
                 'currentPasswordInvalid' => true,
@@ -81,6 +81,8 @@ class IndexController extends Controller
         }
 
         $user->password = bcrypt($request->new_password);
+        $user->password_temp = null;
+        $user->password_temp_expiration = null;
         $user->save();
 
         return new JsonResponse(['success' => true]);

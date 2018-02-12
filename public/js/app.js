@@ -1114,6 +1114,7 @@ Vue.component('animal-gain', __webpack_require__(61));
 Vue.component('process-transfer', __webpack_require__(64));
 Vue.component('process-withdraw', __webpack_require__(67));
 Vue.component('selector-date', __webpack_require__(70));
+Vue.component('password-reset', __webpack_require__(84));
 
 var app = new Vue({
   el: '#app'
@@ -46429,9 +46430,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['banks'],
+    props: ['banks', 'login_url'],
     data: function data() {
         return {
             send: false,
@@ -47342,6 +47350,15 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
+              _c("p", [
+                _c("a", { attrs: { href: _vm.login_url } }, [
+                  _c("i", { staticClass: "glyphicon glyphicon-log-in" }),
+                  _vm._v(
+                    "\n                            ¿Ya tienes cuenta?. Inicia sesión.\n                        "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
               !_vm.loading
                 ? _c("button", { staticClass: "btn btn-primary" }, [
                     _c("i", { staticClass: "glyphicon glyphicon-thumbs-up" }),
@@ -47514,8 +47531,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['register_url', 'password_url'],
     data: function data() {
         return {
             send: false,
@@ -47579,8 +47604,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this2.loginUserForm.password = '';
                     _this2.loading = false;
                 }
-
-                console.log(response);
             }).catch(function (response) {
                 _this2.loading = false;
                 _this2.invalid = true;
@@ -47598,262 +47621,250 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-sm-8" }, [
-      _c("div", { staticClass: "panel panel-default" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "panel-body" }, [
-          _c(
-            "p",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.invalid,
-                  expression: "invalid"
-                }
-              ],
-              staticClass: "text-danger"
-            },
-            [
+  return _c("section", [
+    _c("div", { staticClass: "panel panel-default" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "panel-body" }, [
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.invalid,
+                expression: "invalid"
+              }
+            ],
+            staticClass: "alert alert-danger"
+          },
+          [
+            _c("p", { staticClass: "text-danger" }, [
               _vm._v(
                 "\n                    Credenciales invalidas\n                "
               )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "form",
-            {
-              attrs: { action: "", method: "post" },
-              on: {
-                submit: function($event) {
-                  _vm.validateData($event)
-                }
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            attrs: { action: "", method: "post" },
+            on: {
+              submit: function($event) {
+                _vm.validateData($event)
               }
-            },
-            [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "email" } }, [_vm._v("Email")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.loginUserForm.email,
-                      expression: "loginUserForm.email"
-                    },
-                    { name: "validate", rawName: "v-validate" }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "email",
-                    id: "email",
-                    name: "email",
-                    placeholder: "Email",
-                    "data-vv-rules": "required|email"
-                  },
-                  domProps: { value: _vm.loginUserForm.email },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.loginUserForm, "email", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "p",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value:
-                          _vm.send &&
-                          _vm.hasError("email", "required", _vm.errors),
-                        expression:
-                          "send && hasError('email', 'required', errors)"
-                      }
-                    ],
-                    staticClass: "text-danger"
-                  },
-                  [
-                    _vm._v(
-                      "\n                            Debe completar este campo\n                        "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "p",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value:
-                          _vm.send &&
-                          _vm.hasError("email", "email", _vm.errors),
-                        expression: "send && hasError('email', 'email', errors)"
-                      }
-                    ],
-                    staticClass: "text-danger"
-                  },
-                  [
-                    _vm._v(
-                      "\n                            Formato invalido\n                        "
-                    )
-                  ]
-                )
-              ]),
+            }
+          },
+          [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "email" } }, [_vm._v("Email")]),
               _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "password" } }, [
-                  _vm._v("Contraseña")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.loginUserForm.password,
-                      expression: "loginUserForm.password"
-                    },
-                    { name: "validate", rawName: "v-validate" }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "password",
-                    id: "password",
-                    name: "password",
-                    placeholder: "Contraseña",
-                    "data-vv-rules": "required|min:6|max:20"
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.loginUserForm.email,
+                    expression: "loginUserForm.email"
                   },
-                  domProps: { value: _vm.loginUserForm.password },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.loginUserForm,
-                        "password",
-                        $event.target.value
-                      )
+                  { name: "validate", rawName: "v-validate" }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "email",
+                  id: "email",
+                  name: "email",
+                  placeholder: "Email",
+                  "data-vv-rules": "required|email"
+                },
+                domProps: { value: _vm.loginUserForm.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
                     }
+                    _vm.$set(_vm.loginUserForm, "email", $event.target.value)
                   }
-                }),
-                _vm._v(" "),
-                _c(
-                  "p",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value:
-                          _vm.send &&
-                          _vm.hasError("password", "required", _vm.errors),
-                        expression:
-                          "send && hasError('password', 'required', errors)"
-                      }
-                    ],
-                    staticClass: "text-danger"
-                  },
-                  [
-                    _vm._v(
-                      "\n                            Debe completar este campo\n                        "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "p",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value:
-                          _vm.send &&
-                          _vm.hasError("password", "min", _vm.errors),
-                        expression:
-                          "send && hasError('password', 'min', errors)"
-                      }
-                    ],
-                    staticClass: "text-danger"
-                  },
-                  [
-                    _vm._v(
-                      "\n                            Minimo 6 caracteres\n                        "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "p",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value:
-                          _vm.send &&
-                          _vm.hasError("password", "max", _vm.errors),
-                        expression:
-                          "send && hasError('password', 'max', errors)"
-                      }
-                    ],
-                    staticClass: "text-danger"
-                  },
-                  [
-                    _vm._v(
-                      "\n                            Maximo 20 caracteres\n                        "
-                    )
-                  ]
-                )
-              ]),
+                }
+              }),
               _vm._v(" "),
               _c(
-                "button",
+                "p",
                 {
                   directives: [
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: !_vm.loading,
-                      expression: "! loading"
+                      value:
+                        _vm.send &&
+                        _vm.hasError("email", "required", _vm.errors),
+                      expression:
+                        "send && hasError('email', 'required', errors)"
                     }
                   ],
-                  staticClass: "btn btn-primary"
+                  staticClass: "text-danger"
                 },
                 [
-                  _c("i", { staticClass: "glyphicon glyphicon-off" }),
-                  _vm._v(" Login\n                    ")
+                  _vm._v(
+                    "\n                        Debe completar este campo\n                    "
+                  )
                 ]
               ),
               _vm._v(" "),
-              _c("img", {
+              _c(
+                "p",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value:
+                        _vm.send && _vm.hasError("email", "email", _vm.errors),
+                      expression: "send && hasError('email', 'email', errors)"
+                    }
+                  ],
+                  staticClass: "text-danger"
+                },
+                [
+                  _vm._v(
+                    "\n                        Formato invalido\n                    "
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "password" } }, [
+                _vm._v("Contraseña")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.loginUserForm.password,
+                    expression: "loginUserForm.password"
+                  },
+                  { name: "validate", rawName: "v-validate" }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "password",
+                  id: "password",
+                  name: "password",
+                  placeholder: "Contraseña",
+                  "data-vv-rules": "required|min:6"
+                },
+                domProps: { value: _vm.loginUserForm.password },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.loginUserForm, "password", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value:
+                        _vm.send &&
+                        _vm.hasError("password", "required", _vm.errors),
+                      expression:
+                        "send && hasError('password', 'required', errors)"
+                    }
+                  ],
+                  staticClass: "text-danger"
+                },
+                [
+                  _vm._v(
+                    "\n                        Debe completar este campo\n                    "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value:
+                        _vm.send && _vm.hasError("password", "min", _vm.errors),
+                      expression: "send && hasError('password', 'min', errors)"
+                    }
+                  ],
+                  staticClass: "text-danger"
+                },
+                [
+                  _vm._v(
+                    "\n                        Minimo 6 caracteres\n                    "
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _c("a", { attrs: { href: _vm.register_url } }, [
+                _c("i", { staticClass: "glyphicon glyphicon-list" }),
+                _vm._v(
+                  "\n                        ¿No tienes cuenta?. Registrate gratis.\n                    "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _c("a", { attrs: { href: _vm.password_url } }, [
+                _c("i", { staticClass: "glyphicon glyphicon-envelope" }),
+                _vm._v(
+                  "\n                        ¿No recuerdas tu contraseña?. Recuperala.\n                    "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
                 directives: [
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.loading,
-                    expression: "loading"
+                    value: !_vm.loading,
+                    expression: "! loading"
                   }
                 ],
-                attrs: { src: "/img/loading.gif", alt: "Cargando.." }
-              })
-            ]
-          )
-        ])
+                staticClass: "btn btn-primary"
+              },
+              [
+                _c("i", { staticClass: "glyphicon glyphicon-off" }),
+                _vm._v(" Login\n                ")
+              ]
+            ),
+            _vm._v(" "),
+            _c("img", {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.loading,
+                  expression: "loading"
+                }
+              ],
+              attrs: { src: "/img/loading.gif", alt: "Cargando.." }
+            })
+          ]
+        )
       ])
     ])
   ])
@@ -51057,7 +51068,7 @@ var render = function() {
                 name: "current_password",
                 id: "current_password",
                 placeholder: "Contraseña actual",
-                "data-vv-rules": "required|min:6|max:20"
+                "data-vv-rules": "required|min:6"
               },
               domProps: { value: _vm.changePasswordForm.current_password },
               on: {
@@ -53234,6 +53245,370 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */,
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(85)
+/* template */
+var __vue_template__ = __webpack_require__(86)
+/* template functional */
+  var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/index/passwordResetForm.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2d2d4c5b", Component.options)
+  } else {
+    hotAPI.reload("data-v-2d2d4c5b", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 85 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            send: false,
+            loading: false,
+            invalid: false,
+
+            passwordResetForm: {
+                email: ''
+            }
+        };
+    },
+
+    methods: {
+        //  Verifica si existe un error para un campo determinado
+        hasError: function hasError(field, rule, errors) {
+            for (var err in errors.errors) {
+                //  Verifica si el campo tiene errores
+                if (errors.errors[err].field === field) {
+
+                    if (errors.errors[err].rule === rule) {
+                        //  Si es el error que estoy validando
+                        return true;
+                    }
+
+                    return false;
+                }
+            }
+
+            return false;
+        },
+
+        //  Valida la data
+        validateData: function validateData() {
+            var _this = this;
+
+            this.send = true;
+            this.invalid = false;
+
+            this.$validator.validateAll().then(function (result) {
+
+                if (result) {
+                    _this.resetPassword();
+                }
+            });
+        },
+
+        // Peticion para login
+        resetPassword: function resetPassword() {
+            var _this2 = this;
+
+            this.loading = true;
+
+            axios.post('/restorePassword', this.passwordResetForm).then(function (response) {
+
+                if (response.data.success) {
+                    location.href = response.data.redirect;
+                } else {
+                    _this2.loading = false;
+                    _this2.invalid = true;
+                }
+            }).catch(function (response) {
+                _this2.loading = false;
+                _this2.invalid = true;
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("section", [
+    _c("div", { staticClass: "panel panel-default" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "panel-body" }, [
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.invalid,
+                expression: "invalid"
+              }
+            ],
+            staticClass: "alert alert-danger"
+          },
+          [
+            _c("p", { staticClass: "text-danger" }, [
+              _vm._v(
+                "\n                    No existe el correo\n                "
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            attrs: { action: "", method: "post" },
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                _vm.validateData()
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "email" } }, [_vm._v("Email")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.passwordResetForm.email,
+                    expression: "passwordResetForm.email"
+                  },
+                  { name: "validate", rawName: "v-validate" }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "email",
+                  id: "email",
+                  name: "email",
+                  placeholder: "Email",
+                  "data-vv-rules": "required|email"
+                },
+                domProps: { value: _vm.passwordResetForm.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.passwordResetForm,
+                      "email",
+                      $event.target.value
+                    )
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value:
+                        _vm.send &&
+                        _vm.hasError("email", "required", _vm.errors),
+                      expression:
+                        "send && hasError('email', 'required', errors)"
+                    }
+                  ],
+                  staticClass: "text-danger"
+                },
+                [
+                  _vm._v(
+                    "\n                        Debe completar este campo\n                    "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value:
+                        _vm.send && _vm.hasError("email", "email", _vm.errors),
+                      expression: "send && hasError('email', 'email', errors)"
+                    }
+                  ],
+                  staticClass: "text-danger"
+                },
+                [
+                  _vm._v(
+                    "\n                        Formato invalido\n                    "
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: !_vm.loading,
+                    expression: "! loading"
+                  }
+                ],
+                staticClass: "btn btn-primary"
+              },
+              [
+                _c("i", { staticClass: "glyphicon glyphicon-envelope" }),
+                _vm._v(" Recuperar\n                ")
+              ]
+            ),
+            _vm._v(" "),
+            _c("img", {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.loading,
+                  expression: "loading"
+                }
+              ],
+              attrs: { src: "/img/loading.gif", alt: "Cargando.." }
+            })
+          ]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-heading" }, [
+      _c("h3", { staticClass: "panel-title" }, [
+        _vm._v("Recuperación de contraseña")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2d2d4c5b", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

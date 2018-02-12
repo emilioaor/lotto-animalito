@@ -204,6 +204,13 @@
 
                         </div>
 
+                        <p>
+                            <a v-bind:href="login_url">
+                                <i class="glyphicon glyphicon-log-in"></i>
+                                ¿Ya tienes cuenta?. Inicia sesión.
+                            </a>
+                        </p>
+
                         <button class="btn btn-primary" v-if="! loading">
                             <i class="glyphicon glyphicon-thumbs-up"></i> Registro
                         </button>
@@ -218,7 +225,7 @@
 
 <script>
     export default {
-        props : ['banks'],
+        props : ['banks', 'login_url'],
         data: function() {
             return {
                 send: false,

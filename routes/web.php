@@ -8,6 +8,8 @@ Route::group(['middleware' => 'guest'], function() {
     Route::get('/register', ['uses' => 'Index\IndexController@register', 'as' => 'index.register']);
     Route::post('/register', ['uses' => 'Index\IndexController@registerUser', 'as' => 'index.registerUser']);
     Route::get('/emailExists/{email}', ['uses' => 'Index\IndexController@emailExists', 'as' => 'index.emailExists']);
+    Route::get('/passwordReset', ['uses' => 'Index\IndexController@passwordReset', 'as' => 'index.passwordReset']);
+    Route::post('/restorePassword', ['uses' => 'Index\IndexController@restorePassword', 'as' => 'index.restorePassword']);
 });
 
 //  Rutas con autenticacion

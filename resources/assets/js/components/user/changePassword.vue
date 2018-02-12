@@ -22,7 +22,7 @@
                         placeholder="Contraseña actual"
                         v-model="changePasswordForm.current_password"
                         v-validate
-                        data-vv-rules="required|min:6|max:20"
+                        data-vv-rules="required|min:6"
                     >
                     <p class="text-danger" v-show="send && hasError('current_password', 'required', errors)">
                         Este campo es requerido

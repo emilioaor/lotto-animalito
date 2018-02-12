@@ -4,6 +4,4 @@
 // TODO recuperar contraseña
 // TODO Tope en ventas para cada sorteo
 // TODO input fecha compatible en resultados
-// TODO Agregar numero de referencia al aprobar retiros
-// TODO Capturas de pantalla en depositos y retiros
 // TODO notificaciones

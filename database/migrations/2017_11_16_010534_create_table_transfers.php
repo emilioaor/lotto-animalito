@@ -24,6 +24,7 @@ class CreateTableTransfers extends Migration
             $table->foreign('to_id')->references('id')->on('banks');
             $table->float('amount');
             $table->integer('status');
+            $table->string('capture')->nullable();
             $table->timestamps();
         });
     }

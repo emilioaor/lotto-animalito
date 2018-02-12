@@ -19,6 +19,7 @@ class CreateTableWithdraw extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->float('amount');
             $table->integer('status');
+            $table->string('capture')->nullable();
             $table->timestamps();
         });
     }

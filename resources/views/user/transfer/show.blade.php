@@ -79,11 +79,18 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-sm-12">
+                                @if(! empty($transfer->capture))
+                                    <img src="{{ asset($transfer->capture) }}" class="img-responsive">
+                                @endif
+                            </div>
+                        </div>
+
                         @if(Auth::user()->level === \App\User::LEVEL_ADMIN)
 
-
                             @if($transfer->status === \App\Transfer::STATUS_PENDING)
-
+                                <hr>
                                 <process-transfer
                                         accept_url = "{{ route('transfer.changeStatus', ['transfer' => $transfer->id, 'status' => \App\Transfer::STATUS_ACCEPTED]) }}"
                                         rejected_url = "{{ route('transfer.changeStatus', ['transfer' => $transfer->id, 'status' => \App\Transfer::STATUS_REJECTED]) }}"

@@ -27,6 +27,7 @@ Vue.component('bank-data-update', require('./components/user/bankDataUpdate.vue'
 Vue.component('change-password', require('./components/user/changePassword.vue'));
 Vue.component('animal-gain', require('./components/user/animalGain.vue'));
 Vue.component('process-transfer', require('./components/user/processTransfer.vue'));
+Vue.component('process-withdraw', require('./components/user/processWithdraw.vue'));
 
 const app = new Vue({
     el: '#app'

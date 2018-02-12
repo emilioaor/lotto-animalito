@@ -1,5 +1,5 @@
 <template>
-    <form v-on:submit.prevent="validateData()">
+    <form id="transferForm" v-on:submit.prevent="validateData()" enctype="multipart/form-data">
 
         <div class="row">
             <div class="col-sm-6">
@@ -115,6 +115,50 @@
         </div>
 
         <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="capture">Captura de pantalla (Opcional)</label>
+                    <input
+                            type="file"
+                            name="capture"
+                            id="capture"
+                            class="form-control"
+                            placeholder="Captura de pantalla"
+                            @change="setCapture()"
+                            v-validate
+                            data-vv-rules="mimes:image/jpeg,image/png|size:1024"
+                            >
+                    <p
+                            class="text-danger"
+                            v-show="send && hasError('capture', 'required', errors)"
+                            >
+                        Este campo es requerido
+                    </p>
+                    <p
+                            class="text-danger"
+                            v-show="send && hasError('capture', 'mimes', errors)"
+                            >
+                        Captura necesita ser formato .png o .jpg
+                    </p>
+                    <p
+                            class="text-danger"
+                            v-show="send && hasError('capture', 'size', errors)"
+                            >
+                        Maximo 1 mb
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <img v-bind:src="transferForm.capture" class="img-responsive">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
             <div class="col-xs-12">
                 <div class="form-group">
                     <button class="btn btn-success" v-show="! loading">
@@ -143,7 +187,8 @@
                     from_id: 0,
                     to_id: 0,
                     amount: null,
-                    references: null
+                    references: null,
+                    capture: null
                 },
             }
         },
@@ -181,8 +226,8 @@
             registerTransfer: function() {
                 this.loading = true;
 
-                axios.post('/user/transfer', this.transferForm).then(response => {
-                    console.log(response);
+                axios.post('/user/transfer', this.transferForm, {'content-type': 'multipart/form-data'}).then(response => {
+
                     if (response.data.success) {
                         location.href = response.data.redirect;
                     } else {
@@ -192,6 +237,18 @@
                 }).catch(response => {
                     this.loading = false;
                 });
+            },
+
+            setCapture: function() {
+                const file = $('#capture')[0].files[0];
+                const reader = new FileReader();
+
+                reader.addEventListener('load', () => {
+                    this.transferForm.capture = reader.result;
+                });
+
+                reader.readAsDataURL(file);
+
             },
         }
     }

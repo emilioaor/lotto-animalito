@@ -71,9 +71,36 @@ class TransferController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
+
         $transfer = new Transfer($request->all());
         $transfer->user_id = Auth::user()->id;
+
+        if (! empty($request->capture)) {
+
+            $base64 = explode(',', $request->capture);
+
+            $capture = base64_decode($base64[1]);
+            $extension = str_replace('image/png', '', $base64[0]) !== $base64[0] ? '.png' : '.jpg';
+
+            $path = Transfer::DIR_UPLOAD . Transfer::PREFIX_UPLOAD . time() . $extension;
+            $transfer->capture = $path;
+
+            if (! file_put_contents($path, $capture)) {
+                DB::rollback();
+
+                $this->sessionMessage('message.transfer.error', self::ALERT_DANGER);
+
+                return new JsonResponse([
+                    'success' => true,
+                    'redirect' => route('transfer.create'),
+                ]);
+            }
+        }
+
         $transfer->save();
+
+        DB::commit();
 
         $this->sessionMessage('message.transfer.register');
 

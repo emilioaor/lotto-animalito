@@ -1112,6 +1112,7 @@ Vue.component('bank-data-update', __webpack_require__(55));
 Vue.component('change-password', __webpack_require__(58));
 Vue.component('animal-gain', __webpack_require__(61));
 Vue.component('process-transfer', __webpack_require__(64));
+Vue.component('process-withdraw', __webpack_require__(77));
 
 var app = new Vue({
   el: '#app'
@@ -48849,6 +48850,50 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['banks'],
@@ -48862,7 +48907,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 from_id: 0,
                 to_id: 0,
                 amount: null,
-                references: null
+                references: null,
+                capture: null
             }
         };
     },
@@ -48903,8 +48949,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.loading = true;
 
-            axios.post('/user/transfer', this.transferForm).then(function (response) {
-                console.log(response);
+            axios.post('/user/transfer', this.transferForm, { 'content-type': 'multipart/form-data' }).then(function (response) {
+
                 if (response.data.success) {
                     location.href = response.data.redirect;
                 } else {
@@ -48913,6 +48959,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (response) {
                 _this2.loading = false;
             });
+        },
+
+        setCapture: function setCapture() {
+            var _this3 = this;
+
+            var file = $('#capture')[0].files[0];
+            var reader = new FileReader();
+
+            reader.addEventListener('load', function () {
+                _this3.transferForm.capture = reader.result;
+            });
+
+            reader.readAsDataURL(file);
         }
     }
 });
@@ -48928,6 +48987,7 @@ var render = function() {
   return _c(
     "form",
     {
+      attrs: { id: "transferForm", enctype: "multipart/form-data" },
       on: {
         submit: function($event) {
           $event.preventDefault()
@@ -49241,6 +49301,105 @@ var render = function() {
                 )
               ]
             )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-sm-6" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "capture" } }, [
+              _vm._v("Captura de pantalla (Opcional)")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [{ name: "validate", rawName: "v-validate" }],
+              staticClass: "form-control",
+              attrs: {
+                type: "file",
+                name: "capture",
+                id: "capture",
+                placeholder: "Captura de pantalla",
+                "data-vv-rules": "mimes:image/jpeg,image/png|size:1024"
+              },
+              on: {
+                change: function($event) {
+                  _vm.setCapture()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value:
+                      _vm.send &&
+                      _vm.hasError("capture", "required", _vm.errors),
+                    expression:
+                      "send && hasError('capture', 'required', errors)"
+                  }
+                ],
+                staticClass: "text-danger"
+              },
+              [
+                _vm._v(
+                  "\n                    Este campo es requerido\n                "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value:
+                      _vm.send && _vm.hasError("capture", "mimes", _vm.errors),
+                    expression: "send && hasError('capture', 'mimes', errors)"
+                  }
+                ],
+                staticClass: "text-danger"
+              },
+              [
+                _vm._v(
+                  "\n                    Captura necesita ser formato .png o .jpg\n                "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value:
+                      _vm.send && _vm.hasError("capture", "size", _vm.errors),
+                    expression: "send && hasError('capture', 'size', errors)"
+                  }
+                ],
+                staticClass: "text-danger"
+              },
+              [_vm._v("\n                    Maximo 1 mb\n                ")]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-sm-6" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("img", {
+              staticClass: "img-responsive",
+              attrs: { src: _vm.transferForm.capture }
+            })
           ])
         ])
       ]),
@@ -52333,6 +52492,508 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(78)
+/* template */
+var __vue_template__ = __webpack_require__(79)
+/* template functional */
+  var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/user/processWithdraw.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-23aee885", Component.options)
+  } else {
+    hotAPI.reload("data-v-23aee885", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 78 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['accept_url'],
+
+    data: function data() {
+        return {
+            send: false,
+            loading: false,
+            url: this.accept_url,
+
+            processWithdrawForm: {
+                password: null,
+                capture: null
+            }
+        };
+    },
+
+    methods: {
+        //  Verifica si existe un error para un campo determinado
+        hasError: function hasError(field, rule, errors) {
+            for (var err in errors.errors) {
+                //  Verifica si el campo tiene errores
+                if (errors.errors[err].field === field) {
+
+                    if (errors.errors[err].rule === rule) {
+                        //  Si es el error que estoy validando
+                        return true;
+                    }
+
+                    return false;
+                }
+            }
+
+            return false;
+        },
+
+        validateData: function validateData() {
+            var _this = this;
+
+            this.send = true;
+
+            this.$validator.validateAll().then(function (result) {
+
+                if (result) {
+                    _this.processWithdraw();
+                }
+            });
+        },
+
+        processWithdraw: function processWithdraw() {
+            var _this2 = this;
+
+            this.loading = true;
+
+            axios.post(this.url, this.processWithdrawForm).then(function (response) {
+
+                if (response.data.success) {
+                    location.href = response.data.redirect;
+                } else {
+                    _this2.loading = false;
+                    alert('Error interno, intente de nuevo');
+                }
+            }).catch(function (response) {
+                _this2.loading = false;
+            });
+        },
+
+        setCapture: function setCapture() {
+            var _this3 = this;
+
+            var file = $('#capture')[0].files[0];
+            var reader = new FileReader();
+
+            reader.addEventListener('load', function () {
+                _this3.processWithdrawForm.capture = reader.result;
+            });
+
+            reader.readAsDataURL(file);
+        }
+    }
+});
+
+/***/ }),
+/* 79 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "form",
+    {
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          _vm.validateData()
+        }
+      }
+    },
+    [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-sm-6" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "password" } }, [_vm._v("Contraseña")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.processWithdrawForm.password,
+                  expression: "processWithdrawForm.password"
+                },
+                { name: "validate", rawName: "v-validate" }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "password",
+                id: "password",
+                name: "password",
+                placeholder: "Contraseña",
+                "data-vv-rules": "required|min:6|max:20"
+              },
+              domProps: { value: _vm.processWithdrawForm.password },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.processWithdrawForm,
+                    "password",
+                    $event.target.value
+                  )
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value:
+                      _vm.send &&
+                      _vm.hasError("password", "required", _vm.errors),
+                    expression:
+                      "send && hasError('password', 'required', errors)"
+                  }
+                ],
+                staticClass: "text-danger"
+              },
+              [
+                _vm._v(
+                  "\n                    Este campo es requerido\n                "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value:
+                      _vm.send && _vm.hasError("password", "min", _vm.errors),
+                    expression: "send && hasError('password', 'min', errors)"
+                  }
+                ],
+                staticClass: "text-danger"
+              },
+              [
+                _vm._v(
+                  "\n                    Minimo 6 caracteres\n                "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value:
+                      _vm.send && _vm.hasError("password", "max", _vm.errors),
+                    expression: "send && hasError('password', 'max', errors)"
+                  }
+                ],
+                staticClass: "text-danger"
+              },
+              [
+                _vm._v(
+                  "\n                    Maximo 20 caracteres\n                "
+                )
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-6" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "capture" } }, [
+              _vm._v("Captura de pantalla (Opcional)")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [{ name: "validate", rawName: "v-validate" }],
+              staticClass: "form-control",
+              attrs: {
+                type: "file",
+                name: "capture",
+                id: "capture",
+                placeholder: "Captura de pantalla",
+                "data-vv-rules": "mimes:image/jpeg,image/png|size:1024"
+              },
+              on: {
+                change: function($event) {
+                  _vm.setCapture()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value:
+                      _vm.send &&
+                      _vm.hasError("capture", "required", _vm.errors),
+                    expression:
+                      "send && hasError('capture', 'required', errors)"
+                  }
+                ],
+                staticClass: "text-danger"
+              },
+              [
+                _vm._v(
+                  "\n                    Este campo es requerido\n                "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value:
+                      _vm.send && _vm.hasError("capture", "mimes", _vm.errors),
+                    expression: "send && hasError('capture', 'mimes', errors)"
+                  }
+                ],
+                staticClass: "text-danger"
+              },
+              [
+                _vm._v(
+                  "\n                    Captura necesita ser formato .png o .jpg\n                "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value:
+                      _vm.send && _vm.hasError("capture", "size", _vm.errors),
+                    expression: "send && hasError('capture', 'size', errors)"
+                  }
+                ],
+                staticClass: "text-danger"
+              },
+              [_vm._v("\n                    Maximo 1 mb\n                ")]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-sm-6" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("img", {
+              staticClass: "img-responsive",
+              attrs: { src: _vm.processWithdrawForm.capture }
+            })
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-sm-6" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c(
+              "button",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: !_vm.loading,
+                    expression: "! loading"
+                  }
+                ],
+                staticClass: "btn btn-success"
+              },
+              [
+                _c("i", { staticClass: "glyphicon glyphicon-check" }),
+                _vm._v("\n                    Aprobar\n                ")
+              ]
+            ),
+            _vm._v(" "),
+            _c("img", {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.loading,
+                  expression: "loading"
+                }
+              ],
+              attrs: { src: "/img/loading.gif", alt: "Cargando.." }
+            })
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-23aee885", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

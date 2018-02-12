@@ -155,24 +155,54 @@ class WithdrawController extends Controller
         if (! isset($request->password) || ! Hash::check($request->password, Auth::user()->password)) {
             $this->sessionMessage('message.password.fail', self::ALERT_DANGER);
 
-            return redirect()->route('withdraw.show', ['withdraw' => $id]);
+            return new JsonResponse([
+                'success' => true,
+                'redirect' => route('withdraw.show', ['withdraw' => $id])
+            ]);
         }
         DB::beginTransaction();
 
         // Cambia el estatus del retiro
         $withdraw = Withdraw::find($id);
         $withdraw->status = $status;
-        $withdraw->save();
+
         // Actualiza el saldo del usuario
         $user = $withdraw->user;
         $user->block_balance = $user->block_balance - $withdraw->amount;
         $user->balance = $user->balance - $withdraw->amount;
         $user->save();
 
-        $this->sessionMessage('message.withdraw.success');
+        if (! empty($request->capture)) {
+
+            $base64 = explode(',', $request->capture);
+
+            $capture = base64_decode($base64[1]);
+            $extension = str_replace('image/png', '', $base64[0]) !== $base64[0] ? '.png' : '.jpg';
+
+            $path = Withdraw::DIR_UPLOAD . Withdraw::PREFIX_UPLOAD . time() . $extension;
+            $withdraw->capture = $path;
+
+            if (! file_put_contents($path, $capture)) {
+                DB::rollback();
+
+                $this->sessionMessage('message.withdraw.error', self::ALERT_DANGER);
+
+                return new JsonResponse([
+                    'success' => true,
+                    'redirect' => route('withdraw.show', ['withdraw' => $id]),
+                ]);
+            }
+        }
+
+        $withdraw->save();
 
         DB::commit();
 
-        return redirect()->route('withdraw.show', ['withdraw' => $id]);
+        $this->sessionMessage('message.withdraw.success');
+
+        return new JsonResponse([
+            'success' => true,
+            'redirect' => route('withdraw.show', ['withdraw' => $id])
+        ]);
     }
 }

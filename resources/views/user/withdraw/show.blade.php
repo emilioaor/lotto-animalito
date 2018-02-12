@@ -2,10 +2,10 @@
 
 @section('main')
     <h1>
-        <i class="glyphicon glyphicon-transfer"></i> Detalle de la recarga.
+        <i class="glyphicon glyphicon-transfer"></i> Detalle del retiro.
     </h1>
     <p>
-        Verifica el estatus de tu recarga, recuerda que puede tardar hasta 24 horas habiles bancarias en ser aprobada.
+        Verifica el estatus de tu retiro, recuerda que puede tardar hasta 24 horas habiles bancarias en hacer efectivo.
     </p>
 
     <section class="show-ticket">
@@ -91,25 +91,20 @@
 
                         </div>
 
-                        @if(Auth::user()->level === \App\User::LEVEL_ADMIN && $withdraw->status === \App\Withdraw::STATUS_PENDING)
-
+                        @if(! empty($withdraw->capture))
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <h4>Ingrese contraseña para aprobar este retiro</h4>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <form
-                                                action="{{ route('withdraw.changeStatus', ['withdraw' => $withdraw->id, 'status' => \App\Withdraw::STATUS_COMPLETE]) }}"
-                                                method="post"
-                                                >
-                                            {{ csrf_field() }}
-                                            <input type="password" name="password" class="form-control" placeholder="Contraseña">
-                                        </form>
-                                    </div>
+                                    <img src="{{ asset($withdraw->capture) }}" class="img-responsive">
                                 </div>
                             </div>
+                        @endif
+
+                        @if(Auth::user()->level === \App\User::LEVEL_ADMIN && $withdraw->status === \App\Withdraw::STATUS_PENDING)
+
+                            <process-withdraw
+                                accept_url = "{{ route('withdraw.changeStatus', ['withdraw' => $withdraw->id, 'status' => \App\Withdraw::STATUS_COMPLETE]) }}"
+                            >
+                            </process-withdraw>
                         @endif
 
                     </div>

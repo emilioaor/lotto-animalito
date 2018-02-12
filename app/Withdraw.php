@@ -12,10 +12,15 @@ class Withdraw extends Model
     const STATUS_COMPLETE = 2;
     const STATUS_REJECTED = 3;
 
+    /** Carpeta publica donde se suben las capturas para los cobros */
+    const DIR_UPLOAD = 'uploads/captures/withdraws/';
+    /** Prefijo para las capturas subidas */
+    const PREFIX_UPLOAD = 'Withdraw-';
+
     protected $table = 'withdraws';
 
     protected $fillable = [
-        'user_id', 'amount', 'status'
+        'user_id', 'amount', 'status', 'capture'
     ];
 
     public function __construct(array $attributes = [])

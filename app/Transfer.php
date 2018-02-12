@@ -12,10 +12,16 @@ class Transfer extends Model
     const STATUS_ACCEPTED = 2;
     const STATUS_REJECTED = 3;
 
+    /** Carpeta publica donde se suben las capturas para las transferencias */
+    const DIR_UPLOAD = 'uploads/captures/transfers/';
+    /** Prefijo para las capturas subidas */
+    const PREFIX_UPLOAD = 'Transfer-';
+
     protected $table = 'transfers';
 
     protected $fillable = [
-        'user_id', 'from_id', 'to_id', 'amount', 'references', 'status', 'approved', 'comment',
+        'user_id', 'from_id', 'to_id', 'amount', 'references',
+        'status', 'approved', 'comment', 'capture',
     ];
 
     public function __construct(array $attributes = [])

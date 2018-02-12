@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Animal;
 use App\Bank;
 use App\DailySort;
+use App\Sort;
 use App\Ticket;
 use App\TicketDetail;
 use App\User;
@@ -59,7 +60,7 @@ class TicketController extends Controller
             return redirect()->route('user.index');
         }
 
-        $animals = Animal::all();
+        $animals = $this->getAnimalsWithDailyLimit();
 
         foreach ($dailySorts as &$ds) {
             $ds->time = $ds->timeFormat();
@@ -84,13 +85,18 @@ class TicketController extends Controller
             $ticket = new Ticket();
             $ticket->save();
 
-            //  Agrego los animales
-            $this->addAnimalsTicket($request->animals, $ticket);
-
             //  Asocia el ticket a los sorteos
             if (! $this->addSortsTicket($request->sorts, $ticket)) {
                 DB::rollback();
                 $this->sessionMessage('message.sort.closed', self::ALERT_DANGER);
+
+                return new JsonResponse(['success' => true, 'redirect' => route('ticket.create')]);
+            }
+
+            //  Agrego los animales
+            if (! $this->addAnimalsTicket($request->animals, $ticket)) {
+                DB::rollback();
+                $this->sessionMessage('message.animal.limit', self::ALERT_DANGER);
 
                 return new JsonResponse(['success' => true, 'redirect' => route('ticket.create')]);
             }
@@ -115,13 +121,27 @@ class TicketController extends Controller
      *
      * @param array $animals
      * @param Ticket $ticket
+     * @return bool
      */
     private function addAnimalsTicket(array $animals, Ticket $ticket)
     {
+        $animalsLimit = $this->getAnimalsWithDailyLimit();
+
         foreach ($animals as $animal) {
             $animalAux = Animal::where('code', $animal['code'])->first();
 
             if ($animalAux) {
+
+                // Verifico que no exceda el limite diario
+                foreach ($animalsLimit as $limit) {
+                    if ($limit->id === $animalAux->id) {
+
+                        if ((floatval($animal['amount']) * count($ticket->dailySorts)) > $limit->limit) {
+                            return false;
+                        }
+                    }
+                }
+
                 $ticketDetail = new TicketDetail();
                 $ticketDetail->ticket_id = $ticket->id;
                 $ticketDetail->animal_id = $animalAux->id;
@@ -129,6 +149,8 @@ class TicketController extends Controller
                 $ticketDetail->save();
             }
         }
+
+        return true;
     }
 
     /**
@@ -171,36 +193,43 @@ class TicketController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Obtiene todos los animalitos y calcula el limite diario
+     * menos lo consumido durante el dia por este usuario
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function edit($id)
+    private function getAnimalsWithDailyLimit()
     {
-        //
-    }
+        $animals = Animal::all();
+        $start = (new \DateTime())->setTime(00, 00, 00);
+        $end = (new \DateTime())->setTime(23, 59, 59);
+        $sort = Sort::first();
+        $sells = [];
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        // Obtengo todos los tickets de hoy para este usuario
+        $tickets = Ticket::where('user_id', Auth::user()->id)
+            ->where('created_at', '>=', $start)
+            ->where('created_at', '<=', $end)
+            ->get()
+        ;
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        // Calculo las ventas de cada animalito
+        foreach ($tickets as $ticket) {
+            foreach ($ticket->ticketDetails as $detail) {
+
+                if (! isset($sells[ $detail->animal->id ])) {
+                    $sells[ $detail->animal->id ] = 0;
+                }
+
+                $sells[ $detail->animal->id ] += ($detail->amount * count($ticket->dailySorts));
+            }
+        }
+
+        // Agrega el limite a cada animalito
+        foreach ($animals as $animal) {
+            $animal->limit = isset($sells[$animal->id]) ? $sort->top_sell - $sells[$animal->id] : $sort->top_sell;
+        }
+
+        return $animals;
     }
 }

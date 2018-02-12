@@ -16,6 +16,7 @@ class SortSeeder extends Seeder
         $sort = new Sort();
         $sort->name = 'Lotto Activo';
         $sort->pay_per_100 = 3000;
+        $sort->top_sell = 5000;
         $sort->save();
 
         $dailySort = new DailySort();

@@ -21,4 +21,5 @@ return [
     'sort.all.closed' => 'Disculpe, todos los sorteos ya cerraron',
     'sort.no.close' => 'No puede asignar ganador hasta que el sorteo cierre',
     'date.noFuture' => 'No puede visualizar un dia mayor a la fecha actual',
+    'animal.limit' => 'Algunos animalitos superan el limite diario',
 ];

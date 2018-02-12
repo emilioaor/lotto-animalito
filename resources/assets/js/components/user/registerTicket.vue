@@ -90,14 +90,22 @@
                                 <div class="col-xs-12">
                                     <table class="table table-responsive">
                                         <tbody>
-                                            <tr v-for="animal in animalForm.animals">
-                                                <td width="20%">
+                                            <tr v-for="animal in animalForm.animals"
+                                                v-bind:class="{'bg-danger': validateLimit(animal)}"
+                                                >
+                                                <td width="10%">
                                                     {{ animal.code }}
                                                 </td>
                                                 <td width="40%">
                                                     {{ animal.name }}
                                                 </td>
-                                                <td width="40%">
+                                                <td width="20%" class="text-danger">
+                                                    <small v-show="validateLimit(animal)">
+                                                        Limite:
+                                                        {{ animal.limit }}
+                                                    </small>
+                                                </td>
+                                                <td width="30%">
                                                     {{ animal.amount }}
                                                 </td>
                                                 <td>
@@ -113,7 +121,7 @@
                                         </tbody>
                                         <tfoot v-if="animalForm.animals.length">
                                             <tr>
-                                                <th colspan="2">Subtotal</th>
+                                                <th colspan="3">Subtotal</th>
                                                 <th>{{ subtotal }}</th>
                                                 <th></th>
                                             </tr>
@@ -272,6 +280,7 @@
                         code: this.selected.code,
                         name: this.selected.name,
                         amount: parseInt(this.amount),
+                        limit: parseInt(this.selected.limit),
                     });
 
                     this.subtotal += parseInt(this.amount);
@@ -322,11 +331,27 @@
                 return false;
             },
 
+            // Valida si no excede el limite diario
+            validateLimit: function (animal) {
+                return (animal.amount * this.animalForm.sorts.length) > animal.limit
+            },
+
+            // Verifica si alguno de los animalitos del ticket supera el limite diario
+            validateLimitAll: function () {
+                for (let i in this.animalForm.animals) {
+                    if (this.validateLimit(this.animalForm.animals[i])) {
+                        return true;
+                    }
+                }
+
+                return false;
+            },
+
             //  Valida la data antes de registrar el ticket
             validateData: function () {
                 this.send = true;
 
-                if (this.animalForm.sorts.length && this.animalForm.animals.length && this.total <= this.myBalance) {
+                if (this.animalForm.sorts.length && this.animalForm.animals.length && this.total <= this.myBalance && ! this.validateLimitAll()) {
                     this.registerTicket();
                 }
             },

@@ -147,4 +147,23 @@ class Ticket extends Model
 
         return false;
     }
+
+    /**
+     * Calcula el monto gastado para un animalito en este ticket
+     *
+     * @param $animalId
+     * @return int
+     */
+    public function getAnimalSell($animalId)
+    {
+        $sell = 0;
+
+        foreach ($this->ticketDetails as $detail) {
+            if ($detail->animal->id === $animalId) {
+                $sell += ($detail->amount * count($this->dailySorts));
+            }
+        }
+
+        return $sell;
+    }
 }

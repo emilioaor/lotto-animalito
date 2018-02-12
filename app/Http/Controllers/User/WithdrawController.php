@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Mail\WithdrawMail;
+use App\Mail\WithdrawSuccessMail;
 use App\User;
 use App\Withdraw;
 use Illuminate\Http\JsonResponse;
@@ -10,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class WithdrawController extends Controller
 {
@@ -84,6 +87,8 @@ class WithdrawController extends Controller
             $user = Auth::user();
             $user->block_balance += $withdraw->amount;
             $user->save();
+
+            Mail::send(new WithdrawMail($withdraw));
 
         DB::commit();
 
@@ -195,6 +200,8 @@ class WithdrawController extends Controller
         }
 
         $withdraw->save();
+
+        Mail::send(new WithdrawSuccessMail($withdraw));
 
         DB::commit();
 

@@ -1,6 +1,4 @@
-// TODO Envios de correos
 // TODO Datos reales de mis cuentas
 // TODO Reportes
 
-// TODO recuperar contraseña
 // TODO notificaciones

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Bank;
+use App\Mail\TransferMail;
+use App\Mail\TransferSuccessMail;
 use App\Ticket;
 use App\Transfer;
 use App\User;
@@ -11,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class TransferController extends Controller
 {
@@ -100,6 +103,8 @@ class TransferController extends Controller
 
         $transfer->save();
 
+        Mail::send(new TransferMail($transfer));
+
         DB::commit();
 
         $this->sessionMessage('message.transfer.register');
@@ -121,40 +126,6 @@ class TransferController extends Controller
         $transfer = Transfer::find($id);
 
         return view('user.transfer.show', ['transfer' => $transfer]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     /**
@@ -182,6 +153,8 @@ class TransferController extends Controller
             $user = $transfer->user;
             $user->balance += $transfer->approved;
             $user->save();
+
+            Mail::send(new TransferSuccessMail($transfer));
 
             $this->sessionMessage('message.transfer.approved');
         } else {

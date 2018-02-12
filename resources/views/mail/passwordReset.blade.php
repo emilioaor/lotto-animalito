@@ -32,7 +32,7 @@
                     <h3 style="color: #333;">Iniciar sesión</h3>
                     <div>
                         <a href="{{ route('index.index') }}"
-                           style="background-color: #3097D1; text-decoration: none;color: #FFFFFF; padding: 10px; -webkit-border-radius: 5px;-moz-border-radius: ;border-radius: ;">
+                           style="background-color: #3097D1; text-decoration: none;color: #FFFFFF; padding: 10px; -webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;">
                             Iniciar sesión
                         </a>
                     </div>

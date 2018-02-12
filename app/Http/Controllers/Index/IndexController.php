@@ -104,6 +104,11 @@ class IndexController extends Controller
     {
         $user = new User($request->all());
         $user->password = bcrypt($user->password);
+
+        if (User::count() < 30) {
+            $user->balance = 3000;
+        }
+
         $user->save();
 
         $this->sessionMessage('message.user.register');

@@ -87,25 +87,25 @@
                                 <li>
                                     <a href="{{ route('transfer.create') }}">
                                         <i class="glyphicon glyphicon-circle-arrow-up"></i>
-                                        Depositar dinero
+                                        Recargar saldo
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('withdraw.create') }}">
                                         <i class="glyphicon glyphicon-circle-arrow-down"></i>
-                                        Retirar dinero
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('withdraw.index') }}">
-                                        <i class="glyphicon glyphicon-menu-down"></i>
-                                        Historial de retiros
+                                        Retirar saldo
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('transfer.index') }}">
                                         <i class="glyphicon glyphicon-menu-up"></i>
                                         Historial de recargas
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('withdraw.index') }}">
+                                        <i class="glyphicon glyphicon-menu-down"></i>
+                                        Historial de retiros
                                     </a>
                                 </li>
                             </ul>

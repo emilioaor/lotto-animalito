@@ -1,14 +1,18 @@
 <?php
 
 //  Rutas principales
-Route::get('/', ['uses' => 'Index\IndexController@index', 'as' => 'index.index']);
-Route::post('/login', ['uses' => 'Index\IndexController@login', 'as' => 'index.login']);
-Route::get('/register', ['uses' => 'Index\IndexController@register', 'as' => 'index.register']);
-Route::post('/register', ['uses' => 'Index\IndexController@registerUser', 'as' => 'index.registerUser']);
-Route::get('/emailExists/{email}', ['uses' => 'Index\IndexController@emailExists', 'as' => 'index.emailExists']);
-Route::get('/logout', ['uses' => 'Index\IndexController@logout', 'as' => 'index.logout']);
+Route::group(['middleware' => 'guest'], function() {
+    // Usuarios sin autenticacion
+    Route::get('/', ['uses' => 'Index\IndexController@index', 'as' => 'index.index']);
+    Route::post('/login', ['uses' => 'Index\IndexController@login', 'as' => 'index.login']);
+    Route::get('/register', ['uses' => 'Index\IndexController@register', 'as' => 'index.register']);
+    Route::post('/register', ['uses' => 'Index\IndexController@registerUser', 'as' => 'index.registerUser']);
+    Route::get('/emailExists/{email}', ['uses' => 'Index\IndexController@emailExists', 'as' => 'index.emailExists']);
+});
 
 //  Rutas con autenticacion
+Route::get('/logout', ['uses' => 'Index\IndexController@logout', 'as' => 'index.logout'])->middleware('check');
+
 Route::group(['prefix' => 'user', 'middleware' => 'check'], function() {
     Route::get('/', ['uses' => 'User\IndexController@index', 'as' => 'user.index']);
     Route::get('/config', ['uses' => 'User\IndexController@config', 'as' => 'user.config']);

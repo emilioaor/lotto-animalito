@@ -3,5 +3,4 @@
 
 // TODO recuperar contraseña
 // TODO Tope en ventas para cada sorteo
-// TODO input fecha compatible en resultados
 // TODO notificaciones

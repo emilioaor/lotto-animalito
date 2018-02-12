@@ -17,13 +17,10 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <input
-                                    type="date"
-                                    class="form-control"
-                                    max="{{ date('Y-m-d') }}"
-                                    value="{{ $date }}"
-                                    onchange="location.href = '{{ route('user.results') }}?date=' + this.value"
-                                >
+                                <selector-date
+                                        value="{{ $date }}"
+                                        url="{{ route('user.results') }}"
+                                ></selector-date>
                             </div>
                         </div>
 

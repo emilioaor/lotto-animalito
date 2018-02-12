@@ -100,6 +100,12 @@ class IndexController extends Controller
             $date = new \DateTime();
         }
 
+        if ($date > ($now = new \DateTime())) {
+            $this->sessionMessage('message.date.noFuture', self::ALERT_DANGER);
+
+            return redirect()->route('user.results', ['date' => $now->format('Y-m-d')]);
+        }
+
         $sorts = DailySort::orderBy('time')->get();
         $results = Result::where('date', $date->format('Y-m-d'))->get();
         $animals = Animal::all();

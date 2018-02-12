@@ -28,6 +28,7 @@ Vue.component('change-password', require('./components/user/changePassword.vue')
 Vue.component('animal-gain', require('./components/user/animalGain.vue'));
 Vue.component('process-transfer', require('./components/user/processTransfer.vue'));
 Vue.component('process-withdraw', require('./components/user/processWithdraw.vue'));
+Vue.component('selector-date', require('./components/user/selectorDate.vue'));
 
 const app = new Vue({
     el: '#app'

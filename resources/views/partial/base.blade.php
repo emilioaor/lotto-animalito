@@ -117,6 +117,14 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
+                                @if(Auth::user()->level === \App\User::LEVEL_ADMIN)
+                                    <li>
+                                        <a href="{{ route('user.report') }}">
+                                            <i class="glyphicon glyphicon-file"></i>
+                                            Reporte
+                                        </a>
+                                    </li>
+                                @endif
                                 <li>
                                     <a href="{{ route('user.config') }}">
                                         <i class="glyphicon glyphicon-cog"></i>

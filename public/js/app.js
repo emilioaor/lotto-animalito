@@ -1072,7 +1072,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(11);
-module.exports = __webpack_require__(74);
+module.exports = __webpack_require__(77);
 
 
 /***/ }),
@@ -1114,7 +1114,8 @@ Vue.component('animal-gain', __webpack_require__(61));
 Vue.component('process-transfer', __webpack_require__(64));
 Vue.component('process-withdraw', __webpack_require__(67));
 Vue.component('selector-date', __webpack_require__(70));
-Vue.component('password-reset', __webpack_require__(84));
+Vue.component('password-reset', __webpack_require__(74));
+Vue.component('daily-report', __webpack_require__(87));
 
 var app = new Vue({
   el: '#app'
@@ -53242,29 +53243,14 @@ if (false) {
 
 /***/ }),
 /* 74 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 75 */,
-/* 76 */,
-/* 77 */,
-/* 78 */,
-/* 79 */,
-/* 80 */,
-/* 81 */,
-/* 82 */,
-/* 83 */,
-/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(85)
+var __vue_script__ = __webpack_require__(75)
 /* template */
-var __vue_template__ = __webpack_require__(86)
+var __vue_template__ = __webpack_require__(76)
 /* template functional */
   var __vue_template_functional__ = false
 /* styles */
@@ -53304,7 +53290,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 85 */
+/* 75 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53426,7 +53412,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 86 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -53607,6 +53593,384 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-2d2d4c5b", module.exports)
+  }
+}
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */,
+/* 84 */,
+/* 85 */,
+/* 86 */,
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(88)
+/* template */
+var __vue_template__ = __webpack_require__(89)
+/* template functional */
+  var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/user/dailyReport.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5a2d8299", Component.options)
+  } else {
+    hotAPI.reload("data-v-5a2d8299", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 88 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuejs_datepicker__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuejs_datepicker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuejs_datepicker__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['report_url', 'csrf'],
+
+    data: function data() {
+        return {
+            start: null,
+            end: null,
+            send: false
+        };
+    },
+
+    methods: {
+        validateData: function validateData() {
+            this.send = true;
+
+            if (this.start !== null && this.end !== null && this.start <= this.end) {
+                this.generateReport();
+            }
+        },
+
+        generateReport: function generateReport() {
+            $('#dailyReportForm').submit();
+        },
+
+        getFormatStart: function getFormatStart() {
+
+            if (this.start === null) {
+                return '';
+            }
+
+            var d = this.start.getDate();
+            var m = this.start.getMonth() + 1;
+            var y = this.start.getFullYear();
+
+            return y + '-' + (m > 9 ? m : '0' + m) + '-' + (d > 9 ? d : '0' + d);
+        },
+
+        getFormatEnd: function getFormatEnd() {
+
+            if (this.end === null) {
+                return '';
+            }
+
+            var d = this.end.getDate();
+            var m = this.end.getMonth() + 1;
+            var y = this.end.getFullYear();
+
+            return y + '-' + (m > 9 ? m : '0' + m) + '-' + (d > 9 ? d : '0' + d);
+        }
+    },
+
+    components: { DatePicker: __WEBPACK_IMPORTED_MODULE_0_vuejs_datepicker___default.a }
+});
+
+/***/ }),
+/* 89 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("section", [
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value:
+              _vm.send &&
+              _vm.start !== null &&
+              _vm.end !== null &&
+              _vm.start > _vm.end,
+            expression: "send && start !== null && end !== null && start > end"
+          }
+        ],
+        staticClass: "alert alert-danger"
+      },
+      [
+        _vm._v(
+          "\n        La fecha fin debe ser mayor o igual a la fecha de inicio\n    "
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        attrs: {
+          id: "dailyReportForm",
+          action: _vm.report_url,
+          method: "post"
+        },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            _vm.validateData()
+          }
+        }
+      },
+      [
+        _c("input", {
+          attrs: { type: "hidden", name: "_token" },
+          domProps: { value: _vm.csrf }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-sm-4" }, [
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { attrs: { for: "start" } }, [_vm._v("Inicio")]),
+                _vm._v(" "),
+                _c("date-picker", {
+                  attrs: {
+                    id: "start",
+                    "input-class": "form-control",
+                    placeholder: "Fecha de inicio",
+                    language: "es"
+                  },
+                  model: {
+                    value: _vm.start,
+                    callback: function($$v) {
+                      _vm.start = $$v
+                    },
+                    expression: "start"
+                  }
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "hidden", name: "start" },
+                  domProps: { value: _vm.getFormatStart() }
+                }),
+                _vm._v(" "),
+                _c(
+                  "p",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.send && _vm.start === null,
+                        expression: "send && start === null"
+                      }
+                    ],
+                    staticClass: "text-danger"
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Este campo es requerido\n                    "
+                    )
+                  ]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-4" }, [
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { attrs: { for: "end" } }, [_vm._v("Fin")]),
+                _vm._v(" "),
+                _c("date-picker", {
+                  attrs: {
+                    id: "end",
+                    "input-class": "form-control",
+                    placeholder: "Fecha fin",
+                    language: "es"
+                  },
+                  model: {
+                    value: _vm.end,
+                    callback: function($$v) {
+                      _vm.end = $$v
+                    },
+                    expression: "end"
+                  }
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "hidden", name: "end" },
+                  domProps: { value: _vm.getFormatEnd() }
+                }),
+                _vm._v(" "),
+                _c(
+                  "p",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.send && _vm.end === null,
+                        expression: "send && end === null"
+                      }
+                    ],
+                    staticClass: "text-danger"
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Este campo es requerido\n                    "
+                    )
+                  ]
+                )
+              ],
+              1
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._m(0)
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-xs-12" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("button", { staticClass: "btn btn-success" }, [
+            _c("i", { staticClass: "glyphicon glyphicon-file" }),
+            _vm._v("\n                        Generar\n                    ")
+          ])
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5a2d8299", module.exports)
   }
 }
 

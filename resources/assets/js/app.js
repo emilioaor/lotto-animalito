@@ -30,6 +30,7 @@ Vue.component('process-transfer', require('./components/user/processTransfer.vue
 Vue.component('process-withdraw', require('./components/user/processWithdraw.vue'));
 Vue.component('selector-date', require('./components/user/selectorDate.vue'));
 Vue.component('password-reset', require('./components/index/passwordResetForm.vue'));
+Vue.component('daily-report', require('./components/user/dailyReport.vue'));
 
 const app = new Vue({
     el: '#app'

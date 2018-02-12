@@ -33,5 +33,8 @@ Route::group(['prefix' => 'user', 'middleware' => 'check'], function() {
         Route::post('/setGain', ['uses' => 'User\IndexController@setGain', 'as' => 'user.setGain']);
         Route::post('transfer/{transfer}/changeStatus/{status}', ['uses' => 'User\TransferController@changeStatus', 'as' => 'transfer.changeStatus']);
         Route::post('withdraw/{withdraw}/changeStatus/{status}', ['uses' => 'User\WithdrawController@changeStatus', 'as' => 'withdraw.changeStatus']);
+
+        Route::get('/report', ['uses' => 'Admin\ReportController@report', 'as' => 'user.report']);
+        Route::post('/generateReport', ['uses' => 'Admin\ReportController@generateReport', 'as' => 'user.generateReport']);
     });
 });

@@ -106,7 +106,7 @@ class IndexController extends Controller
         $user->password = bcrypt($user->password);
 
         if (User::count() < 30) {
-            $user->balance = 3000;
+            $user->balance = 1000;
         }
 
         $user->save();

@@ -86,13 +86,21 @@
                                 @endif
                             </a>
                             <ul class="dropdown-menu">
-                                @foreach(Auth::user()->getLastNotifications() as $notification)
-                                    <li class="{{ $notification->isUnread() ? 'bg-success' : '' }}">
-                                        <a href="{{ $notification->url }}">
-                                            {{ $notification->message }}
+                                @if(count($notifications = Auth::user()->getLastNotifications()))
+                                    @foreach($notifications as $notification)
+                                        <li class="{{ $notification->isUnread() ? 'bg-success' : '' }}">
+                                            <a href="{{ $notification->url }}">
+                                                {{ $notification->message }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                @else
+                                    <li class="">
+                                        <a href="#">
+                                            Nada que notificar por el momento.
                                         </a>
                                     </li>
-                                @endforeach
+                                @endif
                             </ul>
                         </li>
                         <li class="dropdown">

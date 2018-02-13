@@ -14,7 +14,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="email">Email</label>
+                                    <label for="email">Email (No se puede cambiar)</label>
                                     <img
                                         src="img/loading.gif"
                                         alt="Cargando.."
@@ -29,7 +29,8 @@
                                         placeholder="Email"
                                         v-model="registerUserForm.email"
                                         v-validate
-                                        v-on:change="verifyEmailExists()"
+                                        v-on:blur="verifyEmailExists()"
+                                        v-on:focus="emailChange=false;emailExists=true"
                                         data-vv-rules="required|email"
                                     >
                                     <p class="text-danger" v-show="send && hasError('email', 'required', errors)">
@@ -39,7 +40,7 @@
                                         Formato invalido
                                     </p>
                                     <p class="text-success" v-show="! errors.has('email') && ! emailExists && emailChange">
-                                        Email valido
+                                        Email valido!
                                     </p>
                                     <p class="text-danger" v-show="! errors.has('email') && emailExists && emailChange">
                                         Este email ya esta siendo usado
@@ -47,20 +48,57 @@
                                 </div>
                             </div>
 
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="identity_card">Cédula de identidad (No se puede cambiar)</label>
+                                    <img
+                                            src="img/loading.gif"
+                                            alt="Cargando.."
+                                            width="20px"
+                                            v-show="loadingIdentityCard"
+                                            >
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            id="identity_card"
+                                            name="identity_card"
+                                            placeholder="Cédula de identidad"
+                                            v-model="registerUserForm.identity_card"
+                                            v-on:blur="verifyIdentityCardExists()"
+                                            v-on:focus="identityCardChange=false;identityCardExists=true"
+                                            v-validate
+                                            data-vv-rules="required"
+                                            >
+                                    <p class="text-danger" v-show="send && hasError('identity_card', 'required', errors)">
+                                        Debe completar este campo
+                                    </p>
+                                    <p class="text-danger" v-show="send && ! errors.has('identity_card') && ! validateIdentityCard()">
+                                        Formato invalido
+                                    </p>
+                                    <p class="text-success" v-show="! errors.has('identity_card') && validateIdentityCard() && ! identityCardExists && identityCardChange">
+                                        Todo bien!
+                                    </p>
+                                    <p class="text-danger" v-show="! errors.has('identity_card') && validateIdentityCard() && identityCardExists && identityCardChange">
+                                        Esta cedula ya esta registrada
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="password">Contraseña</label>
                                     <input
-                                        type="password"
-                                        class="form-control"
-                                        id="password"
-                                        name="password"
-                                        placeholder="Contraseña"
-                                        v-model="registerUserForm.password"
-                                        v-validate
-                                        data-vv-rules="required|min:6|max:20|confirmed:password_confirmation"
-                                    >
+                                            type="password"
+                                            class="form-control"
+                                            id="password"
+                                            name="password"
+                                            placeholder="Contraseña"
+                                            v-model="registerUserForm.password"
+                                            v-validate
+                                            data-vv-rules="required|min:6|max:20|confirmed:password_confirmation"
+                                            >
                                     <p class="text-danger" v-show="send && hasError('password', 'required', errors)">
                                         Debe completar este campo
                                     </p>
@@ -75,9 +113,7 @@
                                     </p>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="password_confirmation">Repetir contraseña</label>
@@ -105,52 +141,28 @@
                                     </p>
                                 </div>
                             </div>
+                        </div>
 
+                        <div class="row">
 
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="name">Nombre completo</label>
                                     <input
-                                        type="text"
-                                        class="form-control"
-                                        id="name"
-                                        name="name"
-                                        placeholder="Nombre completo"
-                                        v-model="registerUserForm.name"
-                                        v-validate
-                                        data-vv-rules="required"
-                                    >
+                                            type="text"
+                                            class="form-control"
+                                            id="name"
+                                            name="name"
+                                            placeholder="Nombre completo"
+                                            v-model="registerUserForm.name"
+                                            v-validate
+                                            data-vv-rules="required"
+                                            >
                                     <p class="text-danger" v-show="send && hasError('name', 'required', errors)">
                                         Debe completar este campo
                                     </p>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="identity_card">Cédula de identidad</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="identity_card"
-                                        name="identity_card"
-                                        placeholder="Cédula de identidad"
-                                        v-model="registerUserForm.identity_card"
-                                        v-on:change="validateIdentityCard()"
-                                        v-validate
-                                        data-vv-rules="required"
-                                    >
-                                    <p class="text-danger" v-show="send && hasError('identity_card', 'required', errors)">
-                                        Debe completar este campo
-                                    </p>
-                                    <p class="text-danger" v-show="send && ! errors.has('identity_card') && ! validateIdentityCard()">
-                                        Formato invalido
-                                    </p>
-                                </div>
-                            </div>
-
 
                             <div class="col-sm-6">
                                 <div class="form-group">
@@ -231,9 +243,12 @@
                 send: false,
                 emailChange: false,
                 emailExists: true,
+                identityCardChange: false,
+                identityCardExists: true,
                 bankList: JSON.parse(this.banks),
                 loading: false,
                 loadingEmail: false,
+                loadingIdentityCard: false,
 
                 registerUserForm: {
                     email: '',
@@ -258,6 +273,7 @@
 
                     if (result &&
                         this.validateIdentityCard() &&
+                        ! this.identityCardExists &&
                         ! this.emailExists &&
                         parseInt(this.registerUserForm.bank_id) > 0
                     ) {
@@ -311,7 +327,7 @@
 
             // Valida si un email esta disponible
             verifyEmailExists: function () {
-                if (! this.hasError('email', 'email', this.errors)) {
+                if (! this.hasError('email', 'email', this.errors) && this.registerUserForm.email !== '') {
                     this.emailChange = true;
                     this.loadingEmail = true;
 
@@ -320,6 +336,23 @@
                         this.loadingEmail = false;
                     }).catch(response => {
                         this.loadingEmail = false;
+                    });
+
+                }
+
+            },
+
+            // Valida si la cedula esta disponible
+            verifyIdentityCardExists: function () {
+                if (this.validateIdentityCard()) {
+                    this.identityCardChange = true;
+                    this.loadingIdentityCard = true;
+
+                    axios.get('/identityCardExists/' + this.registerUserForm.identity_card).then((data) => {
+                        this.identityCardExists  = data.data.exists;
+                        this.loadingIdentityCard = false;
+                    }).catch(response => {
+                        this.loadingIdentityCard = false;
                     });
 
                 }

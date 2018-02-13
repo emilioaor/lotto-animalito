@@ -105,9 +105,8 @@ class IndexController extends Controller
         $user = new User($request->all());
         $user->password = bcrypt($user->password);
 
-        if (User::count() < 30) {
-            $user->balance = 1000;
-        }
+        // Les doy 1000 de saldo a nuevos usuarios por promocion
+        $user->balance = 1000;
 
         $user->save();
 
@@ -129,6 +128,19 @@ class IndexController extends Controller
     public function emailExists($email)
     {
         $user = User::where('email', $email)->first();
+
+        return new JsonResponse(['exists' => $user ? true : false]);
+    }
+
+    /**
+     * Verifica si una cedula esta disponible
+     *
+     * @param string $identityCard
+     * @return JsonResponse
+     */
+    public function identityCardExists($identityCard)
+    {
+        $user = User::where('identity_card', $identityCard)->first();
 
         return new JsonResponse(['exists' => $user ? true : false]);
     }

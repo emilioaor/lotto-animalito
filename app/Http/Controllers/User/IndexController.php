@@ -251,4 +251,16 @@ class IndexController extends Controller
     {
         return new JsonResponse(Auth::user()->graphicData());
     }
+
+    /**
+     * Marca todas las notificaciones del usuario como leidas
+     *
+     * @return JsonResponse
+     */
+    public function markAsRead()
+    {
+        Auth::user()->readNotifications();
+
+        return new JsonResponse(['success' => true]);
+    }
 }

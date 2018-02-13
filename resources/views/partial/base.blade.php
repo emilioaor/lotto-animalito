@@ -78,6 +78,23 @@
 
                     @if(Auth::check())
                         <!-- Usuario autenticado -->
+                        <li>
+                            <a href="#" onclick="markAsRead()"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i style="font-size: 18px" class="glyphicon glyphicon-info-sign"></i>
+                                @if(Auth::user()->hasNotificationUnread())
+                                    <i id="markUnread" style="position: absolute;top: 1rem;right: .8rem;" class="glyphicon glyphicon-certificate text-success"></i>
+                                @endif
+                            </a>
+                            <ul class="dropdown-menu">
+                                @foreach(Auth::user()->getLastNotifications() as $notification)
+                                    <li class="{{ $notification->isUnread() ? 'bg-success' : '' }}">
+                                        <a href="{{ $notification->url }}">
+                                            {{ $notification->message }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 Bsf. {{ number_format(Auth::user()->realBalance(), 2, ',', '.') }}
@@ -176,6 +193,22 @@
     </main>
 
     <script src="{{ asset('js/app.js') }}"></script>
+    <script>
+        var mark = true;
+
+        function markAsRead () {
+            if (mark) {
+
+                mark = false;
+                $('#markUnread').css('display', 'none');
+
+                $.ajax({
+                    url: '{{ route('user.markAsRead') }}'
+                });
+            }
+        }
+
+    </script>
     @yield('js')
 </body>
 </html>

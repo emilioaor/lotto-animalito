@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Mail;
 
 class WithdrawController extends Controller
@@ -114,40 +115,6 @@ class WithdrawController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    /**
      * Actualiza el estatus del retiro
      *
      * @param $id
@@ -176,6 +143,11 @@ class WithdrawController extends Controller
         $user->block_balance = $user->block_balance - $withdraw->amount;
         $user->balance = $user->balance - $withdraw->amount;
         $user->save();
+
+        $user->generateNotification(
+            Lang::trans('message.withdraw.notification', ['amount' => $withdraw->amount]),
+            route('withdraw.show', ['withdraw' => $id])
+        );
 
         if (! empty($request->capture)) {
 

@@ -131,4 +131,59 @@ class User extends Authenticatable
 
         return $data;
     }
+
+    /**
+     * Todas las notificaciones de este usuario
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function notifications()
+    {
+        return $this->hasMany('App\Notification', 'user_id');
+    }
+
+    /**
+     * Ultimas notificaciones
+     *
+     * @param int $limit
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getLastNotifications($limit = 5)
+    {
+        return $this->notifications()->orderBy('id', 'DESC')->limit($limit)->get();
+    }
+
+    /**
+     * Verifica si el usuario posee notificaciones sin leer
+     *
+     * @return int
+     */
+    public function hasNotificationUnread()
+    {
+        return $this->notifications()->where('status', Notification::STATUS_UNREAD)->count();
+    }
+
+    /**
+     * Marca como leidas todas las notificaciones
+     */
+    public function readNotifications()
+    {
+        $this->notifications()->update(['status' => Notification::STATUS_READ]);
+    }
+
+    /**
+     * Genera una notificacion para este usuario
+     *
+     * @param $message
+     * @param $url
+     */
+    public function generateNotification($message, $url)
+    {
+        $notification = new Notification();
+        $notification->message = $message;
+        $notification->url = $url;
+        $notification->user_id = $this->id;
+        $notification->status = Notification::STATUS_UNREAD;
+        $notification->save();
+    }
 }

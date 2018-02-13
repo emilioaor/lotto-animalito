@@ -26,4 +26,6 @@ return [
     'password.restore' => 'Se ha enviado un correo de recuperación',
     'password.expired' => 'La contraseña ya expiro',
     'password.temp' => 'Ha iniciado sesión con una contraseña temporal. Recuerde cambiar su contraseña',
+    'transfer.notification' => 'Se ha aprobado su transferencia por :amount VEF',
+    'withdraw.notification' => 'Se ha aprobado su retiro por :amount VEF',
 ];

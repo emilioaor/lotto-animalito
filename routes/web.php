@@ -22,6 +22,7 @@ Route::group(['prefix' => 'user', 'middleware' => 'check'], function() {
     Route::post('/changePassword', ['uses' => 'User\IndexController@changePassword', 'as' => 'user.changePassword']);
     Route::get('/results', ['uses' => 'User\IndexController@results', 'as' => 'user.results']);
     Route::get('/graphicData', ['uses' => 'User\IndexController@graphicData', 'as' => 'user.graphicData']);
+    Route::get('/markAsRead', ['uses' => 'User\IndexController@markAsRead', 'as' => 'user.markAsRead']);
 
     // Middleware en el constructor del controlador
     Route::resource('ticket', 'User\TicketController');

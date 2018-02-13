@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Mail;
 
 class TransferController extends Controller
@@ -153,6 +154,11 @@ class TransferController extends Controller
             $user = $transfer->user;
             $user->balance += $transfer->approved;
             $user->save();
+
+            $user->generateNotification(
+                Lang::trans('message.transfer.notification', ['amount' => $transfer->approved]),
+                route('transfer.show', ['transfer' => $transferId])
+            );
 
             Mail::send(new TransferSuccessMail($transfer));
 

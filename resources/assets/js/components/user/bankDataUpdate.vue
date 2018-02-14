@@ -101,9 +101,10 @@
                         name="identity_card"
                         id="identity_card"
                         placeholder="Cédula de identidad"
-                        v-model="bankUpdateForm.identity_card"
                         v-validate
                         data-vv-rules="required|numeric|min:7|max:8"
+                        v-bind:disabled="true"
+                        v-bind:value="identity_card"
                     >
                     <p
                         class="text-danger"
@@ -157,7 +158,6 @@
                     bank_id: this.bank_id,
                     number_account: this.number_account,
                     name: this.name,
-                    identity_card: this.identity_card,
                 }
             }
         },

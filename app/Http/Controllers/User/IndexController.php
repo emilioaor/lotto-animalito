@@ -53,7 +53,7 @@ class IndexController extends Controller
         $user->bank_id = $request->bank_id;
         $user->number_account = $request->number_account;
         $user->name = $request->name;
-        $user->identity_card = $request->identity_card;
+        //$user->identity_card = $request->identity_card;
         $user->save();
 
         return new JsonResponse(['success' => true,]);

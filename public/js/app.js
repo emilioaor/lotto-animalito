@@ -50368,6 +50368,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['banks', 'bank_id', 'number_account', 'name', 'identity_card'],
@@ -50380,8 +50381,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             bankUpdateForm: {
                 bank_id: this.bank_id,
                 number_account: this.number_account,
-                name: this.name,
-                identity_card: this.identity_card
+                name: this.name
             }
         };
     },
@@ -50729,36 +50729,17 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.bankUpdateForm.identity_card,
-                  expression: "bankUpdateForm.identity_card"
-                },
-                { name: "validate", rawName: "v-validate" }
-              ],
+              directives: [{ name: "validate", rawName: "v-validate" }],
               staticClass: "form-control",
               attrs: {
                 type: "text",
                 name: "identity_card",
                 id: "identity_card",
                 placeholder: "Cédula de identidad",
-                "data-vv-rules": "required|numeric|min:7|max:8"
+                "data-vv-rules": "required|numeric|min:7|max:8",
+                disabled: true
               },
-              domProps: { value: _vm.bankUpdateForm.identity_card },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(
-                    _vm.bankUpdateForm,
-                    "identity_card",
-                    $event.target.value
-                  )
-                }
-              }
+              domProps: { value: _vm.identity_card }
             }),
             _vm._v(" "),
             _c(

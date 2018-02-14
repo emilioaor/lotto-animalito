@@ -89,6 +89,14 @@ class WithdrawController extends Controller
             $user->block_balance += $withdraw->amount;
             $user->save();
 
+            // Notifica a los administradores
+            $user->generateAdminNotification(
+                Lang::trans('message.withdraw.admin.notification', [
+                    'amount' => number_format($withdraw->amount, 2, ',', '.')
+                ]),
+                route('withdraw.show', ['withdraw' => $withdraw->id])
+            );
+
             Mail::send(new WithdrawMail($withdraw));
 
         DB::commit();
@@ -145,7 +153,9 @@ class WithdrawController extends Controller
         $user->save();
 
         $user->generateNotification(
-            Lang::trans('message.withdraw.notification', ['amount' => $withdraw->amount]),
+            Lang::trans('message.withdraw.notification', [
+                'amount' => number_format($withdraw->amount, 2, ',', '.')
+            ]),
             route('withdraw.show', ['withdraw' => $id])
         );
 

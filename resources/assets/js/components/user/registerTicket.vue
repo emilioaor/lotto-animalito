@@ -215,7 +215,7 @@
                 selected: false,
                 subtotal: 0,
                 total: 0,
-                minAmount: 300,
+                minAmount: 1000,
 
                 animalForm: {
                     animals: [],

@@ -154,11 +154,11 @@ class User extends Authenticatable
     }
 
     /**
-     * Verifica si el usuario posee notificaciones sin leer
+     * Cuenta las notificaciones sin leer para este usuario
      *
      * @return int
      */
-    public function hasNotificationUnread()
+    public function countNotificationUnread()
     {
         return $this->notifications()->where('status', Notification::STATUS_UNREAD)->count();
     }
@@ -185,5 +185,25 @@ class User extends Authenticatable
         $notification->user_id = $this->id;
         $notification->status = Notification::STATUS_UNREAD;
         $notification->save();
+    }
+
+    /**
+     * Genera una notificacion para todos los administradores
+     *
+     * @param $message
+     * @param $url
+     */
+    public function generateAdminNotification($message, $url)
+    {
+        $admins = User::where('level', self::LEVEL_ADMIN)->get();
+
+        foreach ($admins as $user) {
+            $notification = new Notification();
+            $notification->message = $message;
+            $notification->url = $url;
+            $notification->user_id = $user->id;
+            $notification->status = Notification::STATUS_UNREAD;
+            $notification->save();
+        }
     }
 }

@@ -104,6 +104,15 @@ class TransferController extends Controller
 
         $transfer->save();
 
+        // Notifica a los administradores sobre la transferencia
+        $user = $transfer->user;
+        $user->generateAdminNotification(
+            Lang::trans('message.transfer.admin.notification', [
+                'amount' => number_format($transfer->amount, 2, ',', '.')
+            ]),
+            route('transfer.show', ['transfer' => $transfer->id])
+        );
+
         Mail::send(new TransferMail($transfer));
 
         DB::commit();
@@ -156,7 +165,9 @@ class TransferController extends Controller
             $user->save();
 
             $user->generateNotification(
-                Lang::trans('message.transfer.notification', ['amount' => $transfer->approved]),
+                Lang::trans('message.transfer.notification', [
+                    'amount' => number_format($transfer->approved, 2, ',', '.')
+                ]),
                 route('transfer.show', ['transfer' => $transferId])
             );
 

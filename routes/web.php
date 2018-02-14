@@ -24,6 +24,7 @@ Route::group(['prefix' => 'user', 'middleware' => 'check'], function() {
     Route::get('/results', ['uses' => 'User\IndexController@results', 'as' => 'user.results']);
     Route::get('/graphicData', ['uses' => 'User\IndexController@graphicData', 'as' => 'user.graphicData']);
     Route::get('/markAsRead', ['uses' => 'User\IndexController@markAsRead', 'as' => 'user.markAsRead']);
+    Route::get('/notifications', ['uses' => 'User\IndexController@notifications', 'as' => 'user.notifications']);
 
     // Middleware en el constructor del controlador
     Route::resource('ticket', 'User\TicketController');

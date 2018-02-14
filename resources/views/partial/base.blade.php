@@ -80,9 +80,11 @@
                         <!-- Usuario autenticado -->
                         <li>
                             <a href="#" onclick="markAsRead()"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <i style="font-size: 18px" class="glyphicon glyphicon-info-sign"></i>
-                                @if(Auth::user()->hasNotificationUnread())
-                                    <i id="markUnread" style="position: absolute;top: 1rem;right: .8rem;" class="glyphicon glyphicon-certificate text-success"></i>
+                                <i style="font-size: 18px" class="glyphicon glyphicon-envelope"></i>
+                                @if($countNotifications = Auth::user()->countNotificationUnread())
+                                    <span class="number-notification">
+                                        {{ $countNotifications }}
+                                    </span>
                                 @endif
                             </a>
                             <ul class="dropdown-menu">
@@ -94,8 +96,13 @@
                                             </a>
                                         </li>
                                     @endforeach
+                                    <li class="text-center">
+                                        <a href="{{ route('user.notifications') }}" class="notification-all">
+                                            Ver todas las notificaciones
+                                        </a>
+                                    </li>
                                 @else
-                                    <li class="">
+                                    <li>
                                         <a href="#">
                                             Nada que notificar por el momento.
                                         </a>

@@ -111,3 +111,20 @@
     margin-top: 20px;
   }
 }
+
+.number-notification {
+  position: absolute;
+  top: .6rem;
+  right: .8rem;
+  font-weight: bold;
+  padding: 0 .2rem;
+  border-radius: 30%;
+  background: #ea5c59;
+  color: #fff;
+  font-size: 13px;
+}
+.notification-all {
+  color: #3097D1 !important;
+  font-weight: bold;
+  font-size: 12px;
+}

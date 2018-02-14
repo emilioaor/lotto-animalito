@@ -145,7 +145,7 @@ class TicketController extends Controller
                 $ticketDetail = new TicketDetail();
                 $ticketDetail->ticket_id = $ticket->id;
                 $ticketDetail->animal_id = $animalAux->id;
-                $ticketDetail->amount = $animal['amount'] >= 300 ? $animal['amount'] : 300;
+                $ticketDetail->amount = $animal['amount'] >= 1000 ? $animal['amount'] : 1000;
                 $ticketDetail->save();
             }
         }

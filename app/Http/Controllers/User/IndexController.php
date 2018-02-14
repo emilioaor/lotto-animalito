@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Lang;
 
 class IndexController extends Controller
 {
@@ -236,6 +237,12 @@ class IndexController extends Controller
                         $prize = ($detail->amount / 100) * $pay_per_100;
                         $user->balance += $prize;
                         $user->save();
+
+                        // Notifica al usuario
+                        $user->generateNotification(
+                            Lang::trans('message.ticket.gain', ['ticket' => $ticket->public_id]),
+                            route('ticket.show', ['ticket' => $ticket->id])
+                        );
                     }
                 }
             }
@@ -262,5 +269,19 @@ class IndexController extends Controller
         Auth::user()->readNotifications();
 
         return new JsonResponse(['success' => true]);
+    }
+
+    /**
+     * Carga una vista con todas las notificaciones
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function notifications()
+    {
+        $user = Auth::user();
+        $notifications = $user->notifications()->orderBy('id', 'DESC')->paginate();
+        $user->readNotifications();
+
+        return view('user.notifications', ['notifications' => $notifications]);
     }
 }

@@ -25,7 +25,10 @@ return [
     'email.notFound' => 'Email no existe',
     'password.restore' => 'Se ha enviado un correo de recuperación',
     'password.expired' => 'La contraseña ya expiro',
-    'password.temp' => 'Ha iniciado sesión con una contraseña temporal. Recuerde cambiar su contraseña',
-    'transfer.notification' => 'Se ha aprobado su transferencia por :amount VEF',
-    'withdraw.notification' => 'Se ha aprobado su retiro por :amount VEF',
+    'password.temp' => 'Ha iniciado sesión con una contraseña temporal, recuerde cambiar su contraseña. Puede utilizar la contraseña temporal como contraseña actual',
+    'transfer.notification' => 'Transferencia aprobada por :amount VEF',
+    'transfer.admin.notification' => 'Transferencia registrada por :amount VEF',
+    'withdraw.notification' => 'Retiro aprobado por :amount VEF',
+    'withdraw.admin.notification' => 'Retiro solicitado por :amount VEF',
+    'ticket.gain' => 'Ticket :ticket ganador',
 ];

@@ -14,15 +14,18 @@ class WithdrawSuccessMail extends Mailable
     use Queueable, SerializesModels;
 
     private $withdraw;
+    private $recipients;
 
     /**
      * Create a new message instance.
      *
-     * @param Withdraw $withdraw
+     * @param int $id
+     * @param array $recipients
      */
-    public function __construct(Withdraw $withdraw)
+    public function __construct($id, array $recipients)
     {
-        $this->withdraw = $withdraw;
+        $this->withdraw = Withdraw::find($id);
+        $this->recipients = $recipients;
     }
 
     /**

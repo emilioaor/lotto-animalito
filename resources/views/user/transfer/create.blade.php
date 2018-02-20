@@ -41,51 +41,20 @@
 
                             <div class="col-sm-4">
                                 <div class="transfer-create__bank-account">
+                                    <p class="bg-success text-success">
+                                        <strong>Banco:</strong> BBVA Provincial
+                                    </p>
                                     <p>
-                                        <strong>Nombre:</strong> Emilio Ochoa
+                                        <strong>Titular:</strong> Emilio Ochoa
                                     </p>
                                     <p>
                                         <strong>CI:</strong> 21029522
                                     </p>
                                     <p>
-                                        <strong>Banco:</strong> Banesco
+                                        <strong>Cuenta:</strong> 0108-0245-81-1500039492
                                     </p>
                                     <p>
-                                        <strong>Cuenta:</strong> 4664653456454454544
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-4">
-                                <div class="transfer-create__bank-account">
-                                    <p>
-                                        <strong>Nombre:</strong> Emilio Ochoa
-                                    </p>
-                                    <p>
-                                        <strong>CI:</strong> 21029522
-                                    </p>
-                                    <p>
-                                        <strong>Banco:</strong> Banesco
-                                    </p>
-                                    <p>
-                                        <strong>Cuenta:</strong> 4664653456454454544
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-4">
-                                <div class="transfer-create__bank-account">
-                                    <p>
-                                        <strong>Nombre:</strong> Emilio Ochoa
-                                    </p>
-                                    <p>
-                                        <strong>CI:</strong> 21029522
-                                    </p>
-                                    <p>
-                                        <strong>Banco:</strong> Banesco
-                                    </p>
-                                    <p>
-                                        <strong>Cuenta:</strong> 4664653456454454544
+                                        <strong>Correo:</strong> emilioaor@gmail.com
                                     </p>
                                 </div>
                             </div>

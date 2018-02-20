@@ -21,5 +21,15 @@ class UserSeeder extends Seeder
         $user->number_account = '11111111111111111111';
         $user->level = User::LEVEL_ADMIN;
         $user->save();
+
+        $user = new User();
+        $user->email = 'adrianamescalona@gmail.com';
+        $user->name = 'Adriana Escalona';
+        $user->identity_card = '20083121';
+        $user->password = bcrypt('123456');
+        $user->bank_id = 1;
+        $user->number_account = '11111111111111111111';
+        $user->level = User::LEVEL_ADMIN;
+        $user->save();
     }
 }

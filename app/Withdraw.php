@@ -25,7 +25,9 @@ class Withdraw extends Model
 
     public function __construct(array $attributes = [])
     {
-        $this->user_id = Auth::user()->id;
+        if (Auth::check()) {
+            $this->user_id = Auth::user()->id;
+        }
         $this->status = self::STATUS_PENDING;
         parent::__construct($attributes);
     }

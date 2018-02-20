@@ -54,7 +54,7 @@
                                         <span class="bg-info text-info">Pendiente de aprobación</span>
                                     @endif
                                 </td>
-                                <td>{{ number_format($ticket->total() * count($ticket->dailySorts), 2, ',', '.') }}</td>
+                                <td>{{ number_format($ticket->total(), 2, ',', '.') }}</td>
                                 <td>{{ number_format($ticket->gainAmount(), 2, ',', '.') }}</td>
                             </tr>
                         @endforeach

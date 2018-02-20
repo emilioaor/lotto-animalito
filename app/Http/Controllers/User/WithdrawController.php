@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Mail\WithdrawMail;
 use App\Mail\WithdrawSuccessMail;
+use App\Service\EmailService;
 use App\User;
 use App\Withdraw;
 use Illuminate\Http\JsonResponse;
@@ -97,7 +98,14 @@ class WithdrawController extends Controller
                 route('withdraw.show', ['withdraw' => $withdraw->id])
             );
 
-            Mail::send(new WithdrawMail($withdraw));
+            EmailService::addEmail(
+                WithdrawMail::class,
+                [
+                    env('APP_MY_EMAIL'),
+                    env('APP_MY_EMAIL2')
+                ],
+                ['id' => $withdraw->id]
+            );
 
         DB::commit();
 
@@ -183,7 +191,11 @@ class WithdrawController extends Controller
 
         $withdraw->save();
 
-        Mail::send(new WithdrawSuccessMail($withdraw));
+        EmailService::addEmail(
+            WithdrawSuccessMail::class,
+            [$user->email],
+            ['id' => $withdraw->id]
+        );
 
         DB::commit();
 

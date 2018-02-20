@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Bank;
 use App\Mail\TransferMail;
 use App\Mail\TransferSuccessMail;
+use App\Service\EmailService;
 use App\Ticket;
 use App\Transfer;
 use App\User;
@@ -113,7 +114,14 @@ class TransferController extends Controller
             route('transfer.show', ['transfer' => $transfer->id])
         );
 
-        Mail::send(new TransferMail($transfer));
+        EmailService::addEmail(
+            TransferMail::class,
+            [
+                env('APP_MY_EMAIL'),
+                env('APP_MY_EMAIL2')
+            ],
+            ['id' => $transfer->id]
+        );
 
         DB::commit();
 
@@ -171,7 +179,11 @@ class TransferController extends Controller
                 route('transfer.show', ['transfer' => $transferId])
             );
 
-            Mail::send(new TransferSuccessMail($transfer));
+            EmailService::addEmail(
+                TransferSuccessMail::class,
+                [$user->email],
+                ['id' => $transfer->id]
+            );
 
             $this->sessionMessage('message.transfer.approved');
         } else {

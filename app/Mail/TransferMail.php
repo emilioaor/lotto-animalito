@@ -13,15 +13,18 @@ class TransferMail extends Mailable
     use Queueable, SerializesModels;
 
     private $transfer;
+    private $recipients;
 
     /**
      * Create a new message instance.
      *
-     * @param Transfer $transfer
+     * @param int $id
+     * @param array $recipients
      */
-    public function __construct(Transfer $transfer)
+    public function __construct($id, array $recipients)
     {
-        $this->transfer = $transfer;
+        $this->transfer = Transfer::find($id);
+        $this->recipients = $recipients;
     }
 
     /**
@@ -32,7 +35,7 @@ class TransferMail extends Mailable
     public function build()
     {
         return $this
-            ->to(env('APP_MY_EMAIL'))
+            ->to($this->recipients)
             ->subject(env('APP_NAME') . ' - Transferencia registrada')
             ->view('mail.transfer')
             ->with(['transfer' => $this->transfer])

@@ -14,7 +14,7 @@ class BankSeeder extends Seeder
     {
         $bank = new Bank();
         $bank->name = 'Banesco';
-        $bank->i_have = true;
+        $bank->i_have = false;
         $bank->save();
 
         $bank = new Bank();
@@ -98,7 +98,7 @@ class BankSeeder extends Seeder
         $bank->save();
 
         $bank = new Bank();
-        $bank->name = 'Bicentenario Banco Universal15​';
+        $bank->name = 'Bicentenario Banco Universal​';
         $bank->i_have = false;
         $bank->save();
 

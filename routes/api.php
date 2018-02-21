@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('console/email/send', function() {
+    \Illuminate\Support\Facades\Artisan::call('email:send');
+
+    return new \Symfony\Component\HttpFoundation\JsonResponse(['success' => true]);
 });

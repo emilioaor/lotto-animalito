@@ -38,32 +38,31 @@
                         </div>
                     </div>
 
-                    <table class="table table-responsive">
-                        <thead>
-                            <tr>
-                                <th>Sorteo</th>
-                                <th>Hora</th>
-                                <th>Estatus</th>
-                                <th>Ganador</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($sorts as $dailySort)
-                                <tr>
-                                    <td>{{ $dailySort->sort->name }}</td>
-                                    <td>{{ $dailySort->timeFormat() }}</td>
-                                    <td>
+                    <div class="row">
+                        @foreach($sorts as $dailySort)
+                            <div class="col-sm-3">
+                                <div class="alert alert-info">
+                                    <h4>
+                                        {{ $dailySort->sort->name }}
+                                    </h4>
+                                    <p>
+                                        <strong>Hora:</strong>
+                                        {{ $dailySort->timeFormat() }}
+                                    </p>
+                                    <p>
+                                        <strong>Estatus:</strong>
                                         @if($dailySort->isOpen)
                                             <span class="text-success bg-success">
-                                                Abierto
-                                            </span>
+                                            Abierto
+                                        </span>
                                         @else
                                             <span class="text-danger bg-danger">
-                                                Cerrado
-                                            </span>
+                                            Cerrado
+                                        </span>
                                         @endif
-                                    </td>
-                                    <td>
+                                    </p>
+                                    <p>
+                                        <strong>Ganador:</strong>
                                         @foreach($results as $result)
                                             @if($result->daily_sort_id == $dailySort->id)
                                                 <img    width="20px"
@@ -71,11 +70,12 @@
                                                 {{ $result->animal->name }}
                                             @endif
                                         @endforeach
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                    </p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
                 </div>
             </div>
         </div>

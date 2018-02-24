@@ -26,13 +26,15 @@
 
 .ticket-create {
   &__animal {
-    border: solid 1px #ccc;
+    border: solid 1px #3097d1;
     border-radius: 5px;
     margin-bottom: 5px;
     h3 {
       font-size: 18px;
       font-weight: bold;
       margin: 0;
+      background-color: #3097d1;
+      color: #fff;
     }
 
     p {
@@ -43,6 +45,7 @@
     img {
       width: 100%;
       max-width: 50px;
+      margin-top: 10px;
     }
   }
 

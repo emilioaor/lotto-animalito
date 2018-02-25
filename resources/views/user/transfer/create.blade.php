@@ -56,6 +56,9 @@
                                     <p>
                                         <strong>Correo:</strong> adrianamescalona@gmail.com
                                     </p>
+                                    <p>
+                                        <strong>Pago móvil:</strong> 04124380441
+                                    </p>
                                 </div>
                             </div>
                         </div>

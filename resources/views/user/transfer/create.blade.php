@@ -45,19 +45,19 @@
                                         <strong>Banco:</strong> BBVA Provincial
                                     </p>
                                     <p>
-                                        <strong>Titular:</strong> Adriana Escalona
+                                        <strong>Titular:</strong> Emilio Ochoa
                                     </p>
                                     <p>
-                                        <strong>CI:</strong> 20083121
+                                        <strong>CI:</strong> 21029522
                                     </p>
                                     <p>
-                                        <strong>Cuenta:</strong> 0108-0058-71-0100525980
+                                        <strong>Cuenta:</strong> 0108-0245-81-1500039492
                                     </p>
                                     <p>
-                                        <strong>Correo:</strong> adrianamescalona@gmail.com
+                                        <strong>Correo:</strong> emilioaor@gmail.com
                                     </p>
                                     <p>
-                                        <strong>Pago móvil:</strong> 04124380441
+                                        <strong>Pago móvil:</strong> 04127833949
                                     </p>
                                 </div>
                             </div>

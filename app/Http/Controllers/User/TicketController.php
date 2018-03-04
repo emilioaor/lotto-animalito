@@ -51,10 +51,16 @@ class TicketController extends Controller
      */
     public function create()
     {
-        $now = (new \DateTime())->modify('+5 minutes');
-        $dailySorts = DailySort::where('time', '>', $now)->get();
+        $dailySorts = DailySort::all();
 
-        if (! count($dailySorts)) {
+        $dailySortsArray = [];
+        foreach ($dailySorts as $ds) {
+            if ($ds->isOpen()) {
+                $dailySortsArray[] = $ds;
+            }
+        }
+
+        if (! count($dailySortsArray)) {
             $this->sessionMessage('message.sort.all.closed', self::ALERT_DANGER);
 
             return redirect()->route('user.index');
@@ -62,13 +68,13 @@ class TicketController extends Controller
 
         $animals = $this->getAnimalsWithDailyLimit();
 
-        foreach ($dailySorts as &$ds) {
+        foreach ($dailySortsArray as &$ds) {
             $ds->time = $ds->timeFormat();
         }
 
         return view('user.ticket.create', [
             'animals' => $animals,
-            'sorts' => $dailySorts,
+            'sorts' => $dailySortsArray,
         ]);
     }
 

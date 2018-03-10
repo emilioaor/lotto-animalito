@@ -1,51 +1,50 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+Lotto Animalito
+=============================================
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+Página web donde los usuarios pueden jugar a la lotería de animalitos. Se manejan saldos y pagos por transferencia
 
-## About Laravel
+Niveles de usuarios:
+--------------------------------------------------------------------------------
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+####Admin:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* Registrar resultados
+* Validar y aprobar transferencias
+* Validar y aprobar retiros
+* Generar reporte diario
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
+####Normal:
+* Registra tickets
+* Genera notificaciones de transferencia
+* Genera notificaciones de retiro de saldo
+* Configuración de datos bancarios
+* Consulta de resultados 
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
+Instalación
+------------------------------------------------------------------------------
+1. Renombrar el archivo **.env.example** por **.env** en la raíz del proyecto
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+2. En la raíz del proyecto ejecuta el siguiente comando para instalar dependencias de backend
 
-## Laravel Sponsors
+        composer install
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](http://patreon.com/taylorotwell):
+3. En la raíz del proyecto ejecuta el siguiente comando para instalar las dependencias de frontend
 
-- **[Vehikl](http://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Styde](https://styde.net)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
+        npm install
 
-## Contributing
+4. Configurar los datos de conexion a la base de datos
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+5. Ejecutar el siguiente comando para generar la base de datos:
 
-## Security Vulnerabilities
+        php artisan migrate --seed
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+    Esto va a generar la base de datos con toda la data inicial. En el archivo **database/seeds/UserSeeder.php** se encuentran definidos los usuarios por default, siéntete libre de modificar y agregar los usuarios que necesites. Si ya habías corrido el comando anterior puedes reiniciar la base de datos con el siguiente comando
 
-## License
+        php artisan migrate:refresh --seed
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+6. Puedes probar facilmente la aplicación con el siguiente comando:
+
+        php artisan serve
+
+    Con esto te puedes conectar por la siguiente url: **http://localhost:8000**

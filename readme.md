@@ -6,14 +6,14 @@ Página web donde los usuarios pueden jugar a la lotería de animalitos. Se mane
 Niveles de usuarios:
 --------------------------------------------------------------------------------
 
-####Admin:
+#### Admin:
 
 * Registrar resultados
 * Validar y aprobar transferencias
 * Validar y aprobar retiros
 * Generar reporte diario
 
-####Normal:
+#### Normal:
 * Registra tickets
 * Genera notificaciones de transferencia
 * Genera notificaciones de retiro de saldo

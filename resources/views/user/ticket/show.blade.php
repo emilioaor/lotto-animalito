@@ -61,9 +61,19 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-xs-12">
+                            <div class="col-sm-6">
                                 <p class="show-ticket__data">
-                                    Sorteos:
+                                    Sorteo:
+
+                                    <span class="bg-warning text-warning">
+                                        {{ $ticket->dailySorts[0]->sort->name }}
+                                    </span>
+                                </p>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <p class="show-ticket__data">
+                                    Horarios:
 
                                     @foreach($ticket->dailySorts as $sort)
                                         <span class="bg-warning text-warning">

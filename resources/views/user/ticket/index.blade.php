@@ -20,6 +20,7 @@
                         <tr>
                             <th>Código</th>
                             <th>Creado</th>
+                            <th>Sorteo</th>
                             @if(Auth::user()->level === \App\User::LEVEL_ADMIN)
                                 <th>Usuario</th>
                             @endif
@@ -38,6 +39,7 @@
                                     </a>
                                 </td>
                                 <td>{{ $ticket->created_at->format('d-m-Y h:i a') }}</td>
+                                <td>{{ $ticket->dailySorts[0]->sort->name }}</td>
                                 @if(Auth::user()->level === \App\User::LEVEL_ADMIN)
                                     <td>{{ $ticket->user->email }}</td>
                                 @endif

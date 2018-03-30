@@ -279,6 +279,7 @@
                     this.animalForm.animals.push({
                         code: this.selected.code,
                         name: this.selected.name,
+                        id: this.selected.id,
                         amount: parseInt(this.amount),
                         limit: parseInt(this.selected.limit),
                     });

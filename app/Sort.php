@@ -9,7 +9,7 @@ class Sort extends Model
     protected $table = 'sorts';
 
     protected $fillable = [
-        'name', 'pay_per_100', 'top_sell',
+        'name', 'pay_per_100', 'top_sell', 'slug',
     ];
 
     /**

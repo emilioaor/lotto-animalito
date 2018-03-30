@@ -47,15 +47,34 @@ class TicketController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        $dailySorts = DailySort::all();
+
+        if (! isset($request->sort)) {
+            $sorts = Sort::all();
+
+            return view('user.ticket.create', ['sortList' => $sorts]);
+        }
+
+        $sort = Sort::where('slug', $request->sort)
+            ->with('dailySorts')
+            ->with('animals')
+            ->first();
+
+        if (! $sort) {
+            $sorts = Sort::all();
+
+            return view('user.ticket.create', ['sortList' => $sorts]);
+        }
+
 
         $dailySortsArray = [];
-        foreach ($dailySorts as $ds) {
+        foreach ($sort->dailySorts as &$ds) {
             if ($ds->isOpen()) {
+                $ds->time = $ds->timeFormat();
                 $dailySortsArray[] = $ds;
             }
         }
@@ -66,11 +85,7 @@ class TicketController extends Controller
             return redirect()->route('user.index');
         }
 
-        $animals = $this->getAnimalsWithDailyLimit();
-
-        foreach ($dailySortsArray as &$ds) {
-            $ds->time = $ds->timeFormat();
-        }
+        $animals = $this->getAnimalsWithDailyLimit($sort);
 
         return view('user.ticket.create', [
             'animals' => $animals,
@@ -131,10 +146,10 @@ class TicketController extends Controller
      */
     private function addAnimalsTicket(array $animals, Ticket $ticket)
     {
-        $animalsLimit = $this->getAnimalsWithDailyLimit();
+        $animalsLimit = $this->getAnimalsWithDailyLimit($ticket->dailySorts[0]->sort);
 
         foreach ($animals as $animal) {
-            $animalAux = Animal::where('code', $animal['code'])->first();
+            $animalAux = Animal::find($animal['id']);
 
             if ($animalAux) {
 
@@ -202,17 +217,17 @@ class TicketController extends Controller
      * Obtiene todos los animalitos y calcula el limite diario
      * menos lo consumido durante el dia por este usuario
      *
+     * @param $sort
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    private function getAnimalsWithDailyLimit()
+    private function getAnimalsWithDailyLimit($sort)
     {
-        $animals = Animal::all();
+        $animals = $sort->animals;
         $start = (new \DateTime())->setTime(00, 00, 00);
         $end = (new \DateTime())->setTime(23, 59, 59);
-        $sort = Sort::first();
         $sells = [];
 
-        // Obtengo todos los tickets de hoy para este usuario
+        // Obtengo todos los tickets de hoy para este usuario //TODO y este sorteo
         $tickets = Ticket::where('user_id', Auth::user()->id)
             ->where('created_at', '>=', $start)
             ->where('created_at', '<=', $end)

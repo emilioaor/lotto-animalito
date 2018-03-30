@@ -6,6 +6,7 @@ use App\Animal;
 use App\Bank;
 use App\DailySort;
 use App\Result;
+use App\Sort;
 use App\Ticket;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -97,6 +98,20 @@ class IndexController extends Controller
      */
     public function results(Request $request)
     {
+        if (! isset($request->sort)) {
+            $sorts = Sort::all();
+
+            return view('user.results', ['sortList' => $sorts]);
+        }
+
+        $sort = Sort::where('slug', $request->sort)->with('animals')->first();
+
+        if (! $sort) {
+            $sorts = Sort::all();
+
+            return view('user.results', ['sortList' => $sorts]);
+        }
+
         if (isset($request->date)) {
             $date = \DateTime::createFromFormat('Y-m-d', $request->date);
         } else {
@@ -109,9 +124,9 @@ class IndexController extends Controller
             return redirect()->route('user.results', ['date' => $now->format('Y-m-d')]);
         }
 
-        $sorts = DailySort::orderBy('time')->get();
+        $sorts = $sort->dailySorts()->orderBy('time')->get();
         $results = Result::where('date', $date->format('Y-m-d'))->get();
-        $animals = Animal::all();
+        $animals = $sort->animals;
 
         foreach ($sorts as &$sort) {
             $sort->timeFormat = $sort->timeFormat();
@@ -172,6 +187,7 @@ class IndexController extends Controller
         return new JsonResponse([
             'success' => true,
             'redirect' => route('user.results', [
+                'sort' => $dailySort->sort->slug,
                 'date' => isset($request->date) ? $request->date : null
             ]),
         ]);
